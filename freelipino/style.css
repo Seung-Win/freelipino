@@ -4,14 +4,14 @@
 }
 body {
   min-height: 100vh;
-  background: url('Elements/Bg.jpg'); /*UNG ELEMENTS LAGING TANDAAN UNG FILE PATH*/
+  background: url('Elements/BG1.jpg'); /*UNG ELEMENTS LAGING TANDAAN UNG FILE PATH*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 nav {
-  background-color: rgba(230, 239, 177, 0.777);
+  background-color: rgba(233, 248, 201, 0.858);
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
   padding: 10px 20px; 
 }
