@@ -4,7 +4,7 @@
 }
 body {
   min-height: 100vh;
-  background: rgba(0, 0, 0, 0.1); /*UNG ELEMENTS LAGING TANDAAN UNG FILE PATH*/
+  background: rgb(0, 0, 0); /*UNG ELEMENTS LAGING TANDAAN UNG FILE PATH*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -48,8 +48,8 @@ nav li.search-bar {
   justify-content: flex-start;
 }
 nav li.search-bar input {
-  width: 30%; 
-  height: 30px;
+  width: 40%; 
+  height: 50px;
   padding: 5px 10px;
   border: 1px solid #262626;
   border-radius: 4px;
@@ -106,16 +106,32 @@ nav li.search-bar input {
   margin-bottom: 20px;
   opacity: 80%;
 }
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  from, to { border-color: transparent; }
+  50% { border-color: #f2f8a1; }
+}
+
 .content p {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 200px;
+  font-size: 70px;
   color: #f2f8a1;
   font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
+  white-space: nowrap; /* Keeps the text on one line */
+  overflow: hidden; /* Ensures the text is hidden initially */
+  border-right: .15em solid #f2f8a1; /* Cursor effect */
+  width: 0; /* Initially hides the text */
+  animation: typing 4s steps(30, end), blink .75s step-end infinite; /* Typing and blinking animations */
 }
+
 @media(max-width: 800px) {
   .hideOnMobile {
     display: none;
