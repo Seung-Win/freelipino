@@ -78,6 +78,11 @@ button:hover {
     text-align: center;
 }
 
+.correct-message {
+    color: green;
+    text-align: center;
+}
+
 .background-logo {
     position: absolute;
     top: 20px;
