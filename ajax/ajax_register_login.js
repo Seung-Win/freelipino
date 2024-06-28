@@ -1,4 +1,3 @@
-// register
 
 function register() {
 
@@ -16,7 +15,7 @@ function register() {
 
     $.ajax({
       type: "POST",
-      url: "/freelipino-team/controller/register_controller.php",
+      url: "freelipino/controller/register_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
