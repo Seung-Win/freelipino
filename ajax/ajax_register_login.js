@@ -15,7 +15,7 @@ function register() {
 
     $.ajax({
       type: "POST",
-      url: "/Freelipino/controller/register_controller.php",
+      url: "/freelipino/controller/register_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
@@ -52,7 +52,7 @@ function login() {
 
     $.ajax({
       type: "POST",
-      url: "/freelipino-team/controller/login_controller.php",
+      url: "/freelipino/controller/login_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
