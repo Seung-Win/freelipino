@@ -15,7 +15,7 @@ function register() {
 
     $.ajax({
       type: "POST",
-      url: "freelipino/controller/register_controller.php",
+      url: "/Freelipino/controller/register_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
