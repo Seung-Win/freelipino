@@ -53,6 +53,14 @@ try {
     if (mysqli_stmt_execute($statement_insert)) {
       $response['message'] = "Thank you for registering";
       $response['status'] = 1;
+
+      session_start();
+      $_SESSION["user"] = "yes";
+      $_SESSION["email"] = $email;
+      $_SESSION["first_name"] = $first_name;
+      $_SESSION["middle_name"] = $middle_name;
+      $_SESSION["last_name"] = $last_name;
+      $_SESSION["address"] = $address;
     } else {
       throw new Exception("Error in registration");
     }

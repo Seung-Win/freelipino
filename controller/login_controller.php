@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response['message'] = "Invalid email format";
   } else {
     // Check the email and password using prepared statement
-    $check_existing = "SELECT user_id, user_first_name, user_middle_name, user_last_name, user_password
+    $check_existing = "SELECT user_id, user_first_name, user_middle_name, user_last_name, user_address, user_password
                       FROM user_account
                       WHERE user_email = ?";
     $statement = mysqli_prepare($conn, $check_existing);
@@ -26,17 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_stmt_num_rows($statement) > 0) {
       // User found, verify password
-      mysqli_stmt_bind_result($statement, $user_id, $user_first_name, $user_middle_name, $user_last_name, $hashed_password);
+      mysqli_stmt_bind_result($statement, $user_id, $first_name, $middle_name, $last_name, $address, $hashed_password);
       mysqli_stmt_fetch($statement);
 
       if (password_verify($password, $hashed_password)) {
         session_start();
         $_SESSION["user"] = "yes";
         $_SESSION["email"] = $email;
-        $_SESSION["user_first_name"] = $user_first_name;
-        $_SESSION["user_middle_name"] = $user_middle_name;
-        $_SESSION["user_last_name"] = $user_last_name;
-        $_SESSION["user_id"] = $user_id; // Store the userID in the session
+        $_SESSION["first_name"] = $first_name;
+        $_SESSION["middle_name"] = $middle_name;
+        $_SESSION["last_name"] = $last_name;
+        $_SESSION["address"] = $address;
 
         $response['status'] = 1;
         $response['message'] = "Login successful";

@@ -11,7 +11,7 @@
 
 <body>
   <div class="background-logo">
-    <a href="index.html">
+    <a href="index.php">
       <img src="assets/img/logo/logo.png" alt="Logo">
     </a>
   </div>

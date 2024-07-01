@@ -15,7 +15,7 @@ function register() {
 
     $.ajax({
       type: "POST",
-      url: "/freelipino/controller/register_controller.php",
+      url: "/freelipino-team/controller/register_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
@@ -31,6 +31,7 @@ function register() {
           correct_message.css("display", "block");
           correct_message.html(`<p>${response.message}</p>`);
           $("#registrationForm")[0].reset(); // resets the form
+          window.location.href = 'index.php';
         } else {
           correct_message.css("display", "none");
           error_message.css("display", "block");
@@ -52,7 +53,7 @@ function login() {
 
     $.ajax({
       type: "POST",
-      url: "/freelipino/controller/login_controller.php",
+      url: "/freelipino-team/controller/login_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
@@ -65,7 +66,7 @@ function login() {
 
         if (response.status == 1) {
           $("#loginForm")[0].reset(); // resets the form
-            window.location.href = 'index.html';
+            window.location.href = 'index.php';
         } else {
           correct_message.css("display", "none");
           error_message.css("display", "block");
