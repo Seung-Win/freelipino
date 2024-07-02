@@ -33,3 +33,25 @@ function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
+
+
+$(document).ready(function () {
+    $('#createJobForm').on('submit', function (e) {
+        e.preventDefault();
+        // Handle job creation logic here
+        $('#createJobModal').modal('hide');
+    });
+
+    $('#editJobModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var jobId = button.data('job-id');
+        // Fetch and populate job data based on jobId
+    });
+
+    $('#editJobForm').on('submit', function (e) {
+        e.preventDefault();
+        // Handle job editing logic here
+        $('#editJobModal').modal('hide');
+    });
+});
+

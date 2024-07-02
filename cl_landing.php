@@ -1,3 +1,51 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+  session_destroy();
+  header('Location: index.html');
+  exit;
+}
+if (isset($_POST['logout'])) {
+  session_destroy();
+  header('Location: index.html');
+  exit;
+}
+
+require_once 'config.php';
+
+$results_per_page = 6; // Number of job listings per page
+
+if (!isset($_GET['page'])) {
+    $page = 1;
+} else {
+    $page = $_GET['page'];
+}
+
+$start_from = ($page - 1) * $results_per_page;
+
+$sql = "SELECT job_name, job_description, job_price, job_duration, job_photo FROM user_jobs";
+$result = $conn->query($sql);
+
+$user_jobs = [];
+if ($result->num_rows > 0) {
+
+    while ($row = $result->fetch_assoc()) {
+        $job_listings[] = $row;
+    }
+} else {
+    echo "0 results";
+}
+
+// Pagination logic
+$sql_count = "SELECT COUNT(*) AS total FROM user_jobs";
+$result_count = $conn->query($sql_count);
+$row_count = $result_count->fetch_assoc();
+$total_pages = ceil($row_count['total'] / $results_per_page);
+$conn->close();
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -32,6 +80,47 @@
             max-width: 100%;
             height: auto;
         }
+
+        .job-listings {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .single-job-items {
+            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .company-img img {
+            width: 100%;
+            height: auto;
+        }
+        .job-tittle h4 {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .job-tittle ul {
+            list-style: none;
+            padding: 0;
+        }
+        .job-tittle ul li {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .job-tittle ul li i {
+            margin-right: 5px;
+        }
+        .items-link a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #fff;
+            background-color: #007bff;
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-decoration: none;
+        }
+
     </style>
 </head>
 
@@ -68,13 +157,6 @@
                                 </div>
 
                                 <?php
-                                session_start();
-
-                                if (isset($_POST['logout'])) {
-                                    session_destroy();
-                                    header('Location: ' . $_SERVER['PHP_SELF']);
-                                    exit;
-                                }
 
                                 if (isset($_SESSION['email'])) {
                                     echo '<a href="profile.php" style="color: black;">Welcome <span style="color: blue;">' . $_SESSION["first_name"] . '</span>!</a>';
@@ -147,6 +229,61 @@
             </div>
         </div>
         <!-- slider Area End-->
+
+        <section class="featured-job-area feature-padding">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle text-center">
+                            <span>Recent Job</span>
+                            <h2>Featured Jobs</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        <!-- single-job-content -->
+                        <div class="job-listings">
+                            <?php foreach ($job_listings as $job): ?>
+                                <div class="single-job-items mb-30">
+                                    <div class="job-items">
+                                        <div class="company-img">
+                                            <a href="job_details.html"><img src="<?= $job['job_photo'] ?>" alt=""></a>
+                                        </div>
+                                        <div class="job-tittle">
+                                            <a href="job_details.html">
+                                                <h4><?= $job['job_name'] ?></h4>
+                                            </a>
+                                            <ul>
+                                                <li><?= $job['freelancer_id'] ?></li>
+                                                <li><?= $job['job_price'] ?></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="items-link f-right">
+                                        <a href="job_details.html"><?= $job['type'] ?></a>
+                                        <span><?= $job['posted'] ?></span>
+                                    </div>
+                                    </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="pagination-area mt-50">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <?php
+                                    for ($i = 1; $i <= $total_pages; $i++) {
+                                        echo "<li class='page-item'><a class='page-link' href='index.php?page=$i'>$i</a></li>";
+                                    }
+                                    ?>
+                                </ul>
+                            </nav>
+                        </div>
+                </div>
+            </div>
+        </section>
+        <!-- Featured_job_end -->
+
         <!-- Our Services Start -->
         <div class="our-services section-pad-t30">
             <div class="container">
@@ -260,191 +397,6 @@
                 </div>
             </div>
         </div>
-
-        <section class="featured-job-area feature-padding">
-            <div class="container">
-                <!-- Section Tittle -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle text-center">
-                            <span>Recent Job</span>
-                            <h2>Featured Jobs</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-xl-10">
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="job_details.html"><img src="assets/img/icon/job-list1.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="job_details.html">
-                                        <h4>Digital Marketer</h4>
-                                    </a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="job_details.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="job_details.html"><img src="assets/img/icon/job-list2.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="job_details.html">
-                                        <h4>Digital Marketer</h4>
-                                    </a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="job_details.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="job_details.html"><img src="assets/img/icon/job-list3.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="job_details.html">
-                                        <h4>Digital Marketer</h4>
-                                    </a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="job_details.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
-                        <!-- single-job-content -->
-                        <div class="single-job-items mb-30">
-                            <div class="job-items">
-                                <div class="company-img">
-                                    <a href="job_details.html"><img src="assets/img/icon/job-list4.png" alt=""></a>
-                                </div>
-                                <div class="job-tittle">
-                                    <a href="job_details.html">
-                                        <h4>Digital Marketer</h4>
-                                    </a>
-                                    <ul>
-                                        <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-link f-right">
-                                <a href="job_details.html">Full Time</a>
-                                <span>7 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Featured_job_end -->
-        <!-- How  Apply Process Start-->
-        <div class="apply-process-area apply-bg pt-150 pb-150" data-background="assets/img/gallery/how-applybg.png">
-            <div class="container">
-                <!-- Section Tittle -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle white-text text-center">
-                            <span>FREELIPINO PROCESS</span>
-                            <h2> How it works</h2>
-                        </div>
-                    </div>
-                </div>
-                <!-- Apply Process Caption -->
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-process text-center mb-30">
-                            <div class="process-ion">
-                                <span class="flaticon-search"></span>
-                            </div>
-                            <div class="process-cap">
-                                <h5>1. Search for freelancers</h5>
-                                <p>Find a suitable freelancers.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-process text-center mb-30">
-                            <div class="process-ion">
-                                <span class="flaticon-curriculum-vitae"></span>
-                            </div>
-                            <div class="process-cap">
-                                <h5>2. Connect</h5>
-                                <p>You can interact with you preferred freelancers for discussions.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-process text-center mb-30">
-                            <div class="process-ion">
-                                <span class="flaticon-tour"></span>
-                            </div>
-                            <div class="process-cap">
-                                <h5>3. Let the Job don</h5>
-                                <p>Rest assured that our freelancers will get the job done at your own timeline.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="support-company-area support-padding fix">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="right-caption">
-                            <!-- Section Tittle -->
-                            <div class="section-tittle section-tittle2">
-                                <span>What we are doing</span>
-                                <h2>24k Talented people are getting Jobs</h2>
-                            </div>
-                            <div class="support-caption">
-                                <p class="pera-top">The best of the best freelancers.</p>
-                                <p>We Market the elite skills and best performances on the job we done.</p>
-                                <a href="about.html" class="btn post-btn">Find your connections</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6">
-                        <div class="support-location-img">
-                            <img src="assets/img/service/support-img.jpg" alt="">
-                            <div class="support-img-cap text-center">
-                                <p>Since</p>
-                                <span>2023</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
     </main>

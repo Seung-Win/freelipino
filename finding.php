@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Job board HTML-5 Template </title>
+    <title>Find Freelancer</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -34,6 +34,69 @@
         max-width: 100%;
         height: auto;
     }
+        /* Button styles */
+        button {
+            background-color: white;
+            border: 1px solid #3A4688;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition-duration: 0.4s;
+        }
+
+        button:hover {
+            background-color: #3A4688;
+            color: white;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black with opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto; /* Center modal horizontally and vertically */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Adjust width as needed */
+            max-width: 600px; /* Max width for responsiveness */
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+
 </style>
 
 <body>
@@ -145,6 +208,38 @@
                                         </svg>
                                     </div>
                                     <h4>Filter Jobs</h4>
+                                </div>
+
+                                <button type="button" onclick="openModal()">
+                                      Add Jobs
+                                </button>       
+
+                                <div id="myModal" class="modal">
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <span class="close" onclick="closeModal()">&times;</span>
+                                    <h2>Job Details</h2>
+                                    <form id="registrationForm">
+                                    <div class="form-group">
+                                        <label for="fname">Position:</label>
+                                        <input type="text" id="position" name="position" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mname">Qualifications:</label>
+                                        <input type="text" id="qualification" name="qualification" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lname">Service Rate:</label>
+                                        <input type="text" id="rate" name="rate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Duration:</label>
+                                        <input type="text" id="duration" name="duration" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit">Submit</button>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -512,7 +607,7 @@
                                 <div class="footer-tittle">
                                     <h4>About Us</h4>
                                     <div class="footer-pera">
-                                        <p>Heaven frucvitful doesn't cover lesser dvsays appear creeping seasons so behold.</p>
+                                        <p>Freelipino is an exclusive freelancer platform for Filipinos whose talents will cater the local and internatioal demand of the industry. </p>
                                     </div>
                                 </div>
                             </div>
@@ -525,11 +620,11 @@
                                 <h4>Contact Info</h4>
                                 <ul>
                                     <li>
-                                        <p>Address :Your address goes
-                                            here, your demo address.</p>
+                                        <p>Address : Tandang Sora, Quezon City
+                                            Philippines </p>
                                     </li>
-                                    <li><a href="#">Phone : +8880 44338899</a></li>
-                                    <li><a href="#">Email : info@colorlib.com</a></li>
+                                    <li><a href="#">Phone : +1008 12314561 </a></li>
+                                    <li><a href="#">Email : info@freelipino.com</a></li>
                                 </ul>
                             </div>
 
@@ -543,7 +638,7 @@
                                     <li><a href="#"> View Project</a></li>
                                     <li><a href="#">Contact Us</a></li>
                                     <li><a href="#">Testimonial</a></li>
-                                    <li><a href="#">Proparties</a></li>
+                                    <li><a href="#">Properties</a></li>
                                     <li><a href="#">Support</a></li>
                                 </ul>
                             </div>
@@ -554,7 +649,7 @@
                             <div class="footer-tittle">
                                 <h4>Newsletter</h4>
                                 <div class="footer-pera footer-pera2">
-                                    <p>Heaven fruitful doesn't over lesser in days. Appear creeping.</p>
+                                    <p>Subscribe to our newsletter to be updated to our latest developments.</p>
                                 </div>
                                 <!-- Form -->
                                 <div class="footer-form">
@@ -613,7 +708,7 @@
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     Copyright &copy;<script>
                                         document.write(new Date().getFullYear());
-                                    </script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                    </script> All rights reserved. </a>
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 </p>
                             </div>
@@ -668,6 +763,28 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
+
+    <script>
+    function openModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+        var modal = document.getElementById("myModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+
 
 </body>
 
