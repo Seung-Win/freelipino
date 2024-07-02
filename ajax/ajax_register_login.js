@@ -10,12 +10,13 @@ function register() {
     const address = $('#address').val();
     const email = $('#email').val();
     const password = $('#password').val();
+    const type = $('#type').val();
 
     const form_data = new FormData(this);
 
     $.ajax({
       type: "POST",
-      url: "/freelipino-team/controller/register_controller.php",
+      url: "/freelipino/controller/register_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
@@ -53,7 +54,7 @@ function login() {
 
     $.ajax({
       type: "POST",
-      url: "/freelipino-team/controller/login_controller.php",
+      url: "/freelipino/controller/login_controller.php",
       data: form_data,
       dataType: "json",
       contentType: false,
@@ -66,7 +67,10 @@ function login() {
 
         if (response.status == 1) {
           $("#loginForm")[0].reset(); // resets the form
-            window.location.href = 'index.php';
+            window.location.href = 'cl_landing.php';
+        } else if (response.status == 2){
+          $("#loginForm")[0].reset(); // resets the form
+            window.location.href = 'fl_landing.php';
         } else {
           correct_message.css("display", "none");
           error_message.css("display", "block");

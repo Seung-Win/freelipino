@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html lang="eng">
 
 <head>
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
-    <!-- CSS here -->
+
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/price_rangs.css">
@@ -30,7 +30,6 @@
         justify-content: center;
         align-items: center;
     }
-
     .logo img {
         max-width: 100%;
         height: auto;
@@ -38,7 +37,6 @@
 </style>
 
 <body>
-    <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
@@ -64,7 +62,7 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.php">Home</a></li>
+                                            <li><a href="index.html">Home</a></li>
                                             <li><a href="finding.php">Find Freelancer</a></li>
                                             <li><a href="about.html">About</a></li>
                                             <li><a href="#">Page</a>
@@ -106,7 +104,7 @@
 
                             </div>
                         </div>
-                        <!-- Mobile Menu -->
+                     
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
@@ -114,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <!-- Header End -->
+ 
     </header>
     <main>
 

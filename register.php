@@ -11,12 +11,12 @@
 
 <body>
   <div class="background-logo">
-    <a href="index.html">
+    <a href="index.php">
       <img src="assets/img/logo/logo.png" alt="Logo">
     </a>
   </div>
   <div class="container">
-    <h2>Register</h2>
+    <h2>REGISTER</h2>
     <form id="registrationForm">
       <div class="form-group">
         <label for="fname">First Name:</label>
@@ -42,6 +42,14 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
       </div>
+      <div class="form-group">
+    <label for="userType">Select Role:</label>
+    <select id="userType" name="userType" required>
+      <option value="" disabled selected>Select your role</option>
+      <option value="CL">Client</option>
+      <option value="FL">Freelancer</option>
+    </select>
+  </div>
       <div class="form-group">
         <button type="submit">Register</button>
       </div>

@@ -1,14 +1,13 @@
 <!doctype html>
-<html class="no-js" lang="eng">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>FREELIPINO
-    </title>
+    <title>Freelipino</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/logo.png">
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -54,7 +53,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <div class="logo">
-                                <a href="index.php"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -62,21 +61,11 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.php">Home</a></li>
                                             <li><a href="finding.php">Find Freelancer </a></li>
-                                            <li><a href="about.html">Menu</a></li>
-                                            <li><a href="#">Settings</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="job_details.html">job Details</a></li>
-                                                </ul>
-                                            </li>
+                                            <li><a href="about.php">About</a></li>
                                         </ul>
                                     </nav>
                                 </div>
-                                <!-- Header-btn -->
 
                                 <?php
                                 session_start();
@@ -88,7 +77,7 @@
                                 }
 
                                 if (isset($_SESSION['email'])) {
-                                    echo 'Welcome ' . ($_SESSION["first_name"]) . ' !';
+                                    echo '<a href="profile.php" style="color: black;">Welcome <span style="color: blue;">' . $_SESSION["first_name"] . '</span>!</a>';
                                     echo '
                                         <form method="post" style="display: inline;">
                                             <button type="submit" name="logout" class="btn head-btn2">Logout</button>
@@ -99,6 +88,7 @@
                                             <a href="register.php" class="btn head-btn1">Register</a>
                                             <a href="login.php" class="btn head-btn2">Login</a>
                                         </div>';
+
                                 }
                                 ?>
 

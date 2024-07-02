@@ -15,8 +15,9 @@ try {
     $address = htmlspecialchars($_POST["address"]);
     $email = filter_var($_POST["email"], FILTER_VALIDATE_EMAIL);
     $password = htmlspecialchars($_POST["password"]);
+    $type = htmlspecialchars($_POST["userType"]);
 
-    if (empty($first_name) || empty($middle_name) || empty($last_name) || empty($address) || empty($email) || empty($password)) {
+    if (empty($first_name) || empty($middle_name) || empty($last_name) || empty($address) || empty($email) || empty($type)) {
       throw new Exception("Please fill up the whole form.");
     }
 
@@ -34,21 +35,21 @@ try {
 
     $check_existing = "SELECT *
                        FROM user_account
-                       WHERE user_email = ?";
+                       WHERE user_email = ? AND user_type = ?";
     $statement = mysqli_prepare($conn, $check_existing);
-    mysqli_stmt_bind_param($statement, "s", $email);
+    mysqli_stmt_bind_param($statement, "ss", $email, $type);
     mysqli_stmt_execute($statement);
     mysqli_stmt_store_result($statement);
 
     if (mysqli_stmt_num_rows($statement) > 0) {
-      throw new Exception("Sorry! Email already exists");
+      throw new Exception("Sorry! User already exists");
     }
 
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
-    $insert_query = "INSERT INTO user_account (user_first_name, user_middle_name, user_last_name, user_address, user_email, user_password)
-                     VALUES (?, ?, ?, ?, ?, ?)";
+    $insert_query = "INSERT INTO user_account (user_first_name, user_middle_name, user_last_name, user_address, user_email, user_password, user_type)
+                     VALUES (?, ?, ?, ?, ?, ?, ?)";
     $statement_insert = mysqli_prepare($conn, $insert_query);
-    mysqli_stmt_bind_param($statement_insert, "ssssss", $first_name, $middle_name, $last_name, $address, $email, $password_hash);
+    mysqli_stmt_bind_param($statement_insert, "sssssss", $first_name, $middle_name, $last_name, $address, $email, $password_hash, $type);
 
     if (mysqli_stmt_execute($statement_insert)) {
       $response['message'] = "Thank you for registering";
@@ -61,6 +62,7 @@ try {
       $_SESSION["middle_name"] = $middle_name;
       $_SESSION["last_name"] = $last_name;
       $_SESSION["address"] = $address;
+      $_SESSION["type"] = $type;
     } else {
       throw new Exception("Error in registration");
     }

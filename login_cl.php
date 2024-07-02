@@ -16,7 +16,7 @@
     </a>
   </div>
   <div class="container">
-    <h2>Login as Freelancer</h2>
+    <h2>Login as Client</h2>
     <form action="#" method="POST" id="loginForm">
       <div class="form-group">
         <label for="email">Email:</label>
@@ -27,12 +27,12 @@
         <input type="password" id="password" name="password" required>
       </div>
       <div class="form-group">
-        <input type="hidden" id="userType" name="userType" value="FL">
+        <input type="hidden" id="userType"  name="userType" value="CL">
         <button type="submit">Login</button>
       </div>
     </form>
     <div class="form-group">
-      <a href="login_cl.php"><button>Login as Client</button></a>
+      <a href="login.php"><button>Login as Freelancer</button></a>
     </div>
     <p id="errorMessage" class="error-message"></p>
   </div>

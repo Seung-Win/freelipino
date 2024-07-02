@@ -27,7 +27,6 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     errorMessage.textContent = '';
 
     console.log('Form submitted successfully!');
-    // You can add more logic here to handle the form submission, such as sending the data to a server.
 });
 
 function validateEmail(email) {
