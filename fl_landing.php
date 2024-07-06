@@ -2,14 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    session_destroy();
-    header('Location: index.html');
-    exit;
+  session_destroy();
+  header('Location: index.html');
+  exit;
 }
 if (isset($_POST['logout'])) {
-    session_destroy();
-    header('Location: index.html');
-    exit;
+  session_destroy();
+  header('Location: index.html');
+  exit;
 }
 ?>
 
@@ -39,144 +39,144 @@ if (isset($_POST['logout'])) {
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 
   <style>
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .main-content {
-    padding: 20px;
-  }
-
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  h2 {
-    margin-bottom: 20px;
-  }
-
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-
-  .btn-primary:hover {
-    background-color: #0069d9;
-    border-color: #0062cc;
-  }
-
-  .btn-warning {
-    background-color: #ffc107;
-    border-color: #ffc107;
-  }
-
-  .btn-warning:hover {
-    background-color: #e0a800;
-    border-color: #d39e00;
-  }
-
-  .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-  }
-
-  .btn-danger:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
-  }
-
-  /* Job list */
-  .job-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: box-shadow 0.3s;
-    margin-bottom: 20px;
-    /* Add some spacing between job cards */
-  }
-
-  .job-card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .job-card .card-body {
-    padding: 20px;
-  }
-
-  .job-card h5 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-
-  .job-card p {
-    color: #6c757d;
-    margin-bottom: 15px;
-  }
-
-  .job-card .btn-group {
-    margin-top: 15px;
-  }
-
-  /* Uniform job images */
-  .job-card .job_img {
-    width: 100%;
-    height: 200px;
-    /* Adjust the height as needed */
-    object-fit: cover;
-    /* Ensures the image covers the entire area without distortion */
-    border-radius: 5px;
-    /* Matches the border-radius of the card */
-    margin-bottom: 15px;
-    /* Spacing between image and text */
-  }
-
-  /* Modal styles */
-  .modal-dialog {
-    max-width: 800px;
-  }
-
-  .modal-content {
-    border-radius: 6px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  }
-
-  .modal-header {
-    background-color: #007bff;
-    color: #fff;
-    border-bottom: none;
-  }
-
-  .modal-title {
-    font-size: 24px;
-  }
-
-  .modal-body {
-    padding: 20px;
-  }
-
-  .modal-footer {
-    border-top: none;
-  }
-
-  @media (max-width: 768px) {
-    .job-card {
-      padding: 10px;
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-  }
 
-  @media (max-width: 576px) {
+    .logo img {
+      max-width: 100%;
+      height: auto;
+    }
+
     .main-content {
-      padding: 20px 0;
+      padding: 20px;
     }
-  }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      border-color: #ffc107;
+    }
+
+    .btn-warning:hover {
+      background-color: #e0a800;
+      border-color: #d39e00;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+    }
+
+    /* Job list */
+    .job-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      transition: box-shadow 0.3s;
+      margin-bottom: 20px;
+      /* Add some spacing between job cards */
+    }
+
+    .job-card:hover {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-card .card-body {
+      padding: 20px;
+    }
+
+    .job-card h5 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .job-card p {
+      color: #6c757d;
+      margin-bottom: 15px;
+    }
+
+    .job-card .btn-group {
+      margin-top: 15px;
+    }
+
+    /* Uniform job images */
+    .job-card .job_img {
+      width: 100%;
+      height: 200px;
+      /* Adjust the height as needed */
+      object-fit: cover;
+      /* Ensures the image covers the entire area without distortion */
+      border-radius: 5px;
+      /* Matches the border-radius of the card */
+      margin-bottom: 15px;
+      /* Spacing between image and text */
+    }
+
+    /* Modal styles */
+    .modal-dialog {
+      max-width: 800px;
+    }
+
+    .modal-content {
+      border-radius: 6px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+      background-color: #007bff;
+      color: #fff;
+      border-bottom: none;
+    }
+
+    .modal-title {
+      font-size: 24px;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-footer {
+      border-top: none;
+    }
+
+    @media (max-width: 768px) {
+      .job-card {
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .main-content {
+        padding: 20px 0;
+      }
+    }
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -214,20 +214,20 @@ if (isset($_POST['logout'])) {
                 </div>
 
                 <?php
-                                if (isset($_SESSION['email'])) {
-                                    echo '<a href="profile.php" style="color: black;">Welcome <span style="color: rgb(16, 16, 16);">' . $_SESSION["first_name"] . '</span>!</a>';
-                                    echo '
+                if (isset($_SESSION['email'])) {
+                  echo '<a href="profile.php" style="color: black;">Welcome <span style="color: rgb(16, 16, 16);">' . $_SESSION["first_name"] . '</span>!</a>';
+                  echo '
                                         <form method="post" style="display: inline;">
                                             <button type="submit" name="logout" class="btn head-btn2">Logout</button>
                                         </form>';
-                                } else {
-                                    echo '
+                } else {
+                  echo '
                                         <div class="header-btn d-none f-right d-lg-block">
                                             <a href="register.php" class="btn head-btn1">Register</a>
                                             <a href="login.php" class="btn head-btn2">Login</a>
                                         </div>';
-                                }
-                                ?>
+                }
+                ?>
 
 
               </div>
@@ -251,35 +251,33 @@ if (isset($_POST['logout'])) {
       <div class="mt-4" id="job_container">
 
         <?php
-                require 'config.php';
-                $userid =  $_SESSION['user_id'];
-                $sql_query = "SELECT job_id, job_name, job_description, job_price, job_duration, job_photo
+        require 'config.php';
+        $userid =  $_SESSION['user_id'];
+        $sql_query = "SELECT job_id, job_name, job_description, job_price, job_duration, job_photo
                                   FROM user_jobs 
                                   WHERE freelancer_id = ?";
 
-                $statement = mysqli_prepare($conn, $sql_query);
-                mysqli_stmt_bind_param($statement, "i", $userid);
-                if (mysqli_stmt_execute($statement)) {
-                    $result_query = mysqli_stmt_get_result($statement);
-                    while ($row = $result_query->fetch_assoc()) {
-                ?>
-        <div class="card mb-3 job-card">
-          <div class="card-body">
-            <h5 class="card-title"><?= $row['job_name'] ?></h5>
-            <p class="card-text"><?= $row['job_description'] ?></p>
-            <img class="job_img" src="assets/uploads/<?= $row['job_photo'] ?>" alt="JobImage">
-            <div class="btn-group">
-              <button type="button" class="edit_product_button btn btn-warning"
-                value="<?= $row['job_id']; ?>">Edit</button>
-              <button type="button" value="<?= $row['job_id']; ?>"
-                class="delete_product_button btn btn-danger">Delete</button>
+        $statement = mysqli_prepare($conn, $sql_query);
+        mysqli_stmt_bind_param($statement, "i", $userid);
+        if (mysqli_stmt_execute($statement)) {
+          $result_query = mysqli_stmt_get_result($statement);
+          while ($row = $result_query->fetch_assoc()) {
+        ?>
+            <div class="card mb-3 job-card">
+              <div class="card-body">
+                <h5 class="card-title"><?= $row['job_name'] ?></h5>
+                <p class="card-text"><?= $row['job_description'] ?></p>
+                <img class="job_img" src="assets/uploads/<?= $row['job_photo'] ?>" alt="JobImage">
+                <div class="btn-group">
+                  <button type="button" class="edit_product_button btn btn-warning" value="<?= $row['job_id']; ?>">Edit</button>
+                  <button type="button" value="<?= $row['job_id']; ?>" class="delete_product_button btn btn-danger">Delete</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
         <?php
-                    }
-                }
-                ?>
+          }
+        }
+        ?>
       </div>
       <nav aria-label="Job Pagination">
         <ul class="pagination justify-content-center mt-4">
@@ -294,8 +292,7 @@ if (isset($_POST['logout'])) {
           </li>
         </ul>
       </nav>
-      <div class="modal fade" id="createJobModal" tabindex="-1" role="dialog" aria-labelledby="createJobModalLabel"
-        aria-hidden="true">
+      <div class="modal fade" id="createJobModal" tabindex="-1" role="dialog" aria-labelledby="createJobModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -337,8 +334,7 @@ if (isset($_POST['logout'])) {
         </div>
       </div>
 
-      <div class="modal fade" id="editJobModal" tabindex="-1" role="dialog" aria-labelledby="editJobModalLabel"
-        aria-hidden="true">
+      <div class="modal fade" id="editJobModal" tabindex="-1" role="dialog" aria-labelledby="editJobModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -360,8 +356,7 @@ if (isset($_POST['logout'])) {
                 </div>
                 <div class="form-group">
                   <label for="editJobDescription">Job Description</label>
-                  <textarea class="form-control" id="job_description" name="jobDescription" rows="3"
-                    required></textarea>
+                  <textarea class="form-control" id="job_description" name="jobDescription" rows="3" required></textarea>
                 </div>
                 <div class="form-group">
                   <label for="editJobPrice">Job Price</label>
