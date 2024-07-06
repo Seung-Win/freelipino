@@ -193,7 +193,7 @@ h2 {
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="fl_landing.php"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
