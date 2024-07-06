@@ -1,3 +1,8 @@
+<?php
+require 'config.php';
+session_start();
+?>
+
 <!doctype html>
 <html lang="eng">
 
@@ -30,73 +35,83 @@
         justify-content: center;
         align-items: center;
     }
+
     .logo img {
         max-width: 100%;
         height: auto;
     }
-        /* Button styles */
-        button {
-            background-color: white;
-            border: 1px solid #3A4688;
-            color: black;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 20px 2px;
-            cursor: pointer;
-            border-radius: 12px;
-            transition-duration: 0.4s;
-        }
 
-        button:hover {
-            background-color: #3A4688;
-            color: white;
-        }
+    /* Button styles */
+    button {
+        background-color: white;
+        border: 1px solid #3A4688;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 20px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+        transition-duration: 0.4s;
+    }
 
-        /* Modal styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.4); /* Black with opacity */
-        }
+    button:hover {
+        background-color: #3A4688;
+        color: white;
+    }
 
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto; /* Center modal horizontally and vertically */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%; /* Adjust width as needed */
-            max-width: 600px; /* Max width for responsiveness */
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+    /* Modal styles */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black with opacity */
+    }
 
-        .close {
-            color: #aaa;
-            position: absolute;
-            top: 0;
-            right: 10px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        /* Center modal horizontally and vertically */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        /* Adjust width as needed */
+        max-width: 600px;
+        /* Max width for responsiveness */
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-        }
+    .close {
+        color: #aaa;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
 
-
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+    }
 </style>
 
 <body>
@@ -141,7 +156,6 @@
                                     </nav>
                                 </div>
                                 <?php
-                                session_start();
 
                                 if (isset($_POST['logout'])) {
                                     session_destroy();
@@ -167,7 +181,7 @@
 
                             </div>
                         </div>
-                     
+
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
@@ -175,7 +189,7 @@
                 </div>
             </div>
         </div>
- 
+
     </header>
     <main>
 
@@ -211,35 +225,35 @@
                                 </div>
 
                                 <button type="button" onclick="openModal()">
-                                      Add Jobs
-                                </button>       
+                                    Add Jobs
+                                </button>
 
                                 <div id="myModal" class="modal">
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <span class="close" onclick="closeModal()">&times;</span>
-                                    <h2>Job Details</h2>
-                                    <form id="registrationForm">
-                                    <div class="form-group">
-                                        <label for="fname">Position:</label>
-                                        <input type="text" id="position" name="position" required>
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <span class="close" onclick="closeModal()">&times;</span>
+                                        <h2>Job Details</h2>
+                                        <form id="registrationForm">
+                                            <div class="form-group">
+                                                <label for="fname">Position:</label>
+                                                <input type="text" id="position" name="position" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="mname">Qualifications:</label>
+                                                <input type="text" id="qualification" name="qualification" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lname">Service Rate:</label>
+                                                <input type="text" id="rate" name="rate" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address">Duration:</label>
+                                                <input type="text" id="duration" name="duration" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit">Submit</button>
+                                            </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="mname">Qualifications:</label>
-                                        <input type="text" id="qualification" name="qualification" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lname">Service Rate:</label>
-                                        <input type="text" id="rate" name="rate" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address">Duration:</label>
-                                        <input type="text" id="duration" name="duration" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit">Submit</button>
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -412,160 +426,47 @@
                                     </div>
                                 </div>
                                 <!-- Count of Job list End -->
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="assets/img/icon/job-list1.png" alt=""></a>
+
+                                <?php
+
+
+                                // Fetch one variation per product (you can adjust the criteria as needed)
+                                $sql = "SELECT job_id, job_name, job_price, job_photo, job_duration
+                                FROM user_jobs ";
+
+                                $result = $conn->query($sql);
+
+                                // Check if there are products
+                                if ($result->num_rows > 0) {
+                                    // Begin product container
+                                    while ($row = $result->fetch_assoc()) {
+                                ?>
+                                        <!-- single-job-content -->
+                                        <div class=" single-job-items mb-30">
+                                            <div class="job-items">
+                                                <div class="company-img">
+                                                    <a href="#"><img src="assets/uploads/<?= $row['job_photo'] ?>" alt=""></a>
+                                                </div>
+                                                <div class="job-tittle job-tittle2">
+                                                    <a href="#">
+                                                        <h4><?= $row['job_name'] ?></h4>
+                                                    </a>
+                                                    <ul>
+                                                        <li><i class="fas fa-map-marker-alt"></i><?= $row['job_duration'] ?></li>
+                                                        <li>₱<?= $row['job_price'] ?></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="items-link items-link2 f-right">
+                                                <a href="job_details.html">Full Time</a>
+                                            </div>
                                         </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="assets/img/icon/job-list2.png" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="assets/img/icon/job-list3.png" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="assets/img/icon/job-list4.png" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="assets/img/icon/job-list1.png" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="assets/img/icon/job-list3.png" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="#"><img src="assets/img/icon/job-list4.png" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="#">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
-                                </div>
+
+                                <?php
+                                    }
+                                }
+                                ?>
+
                             </div>
                         </section>
                         <!-- Featured_job_end -->
@@ -607,7 +508,8 @@
                                 <div class="footer-tittle">
                                     <h4>About Us</h4>
                                     <div class="footer-pera">
-                                        <p>Freelipino is an exclusive freelancer platform for Filipinos whose talents will cater the local and internatioal demand of the industry. </p>
+                                        <p>Freelipino is an exclusive freelancer platform for Filipinos whose talents will cater the local
+                                            and internatioal demand of the industry. </p>
                                     </div>
                                 </div>
                             </div>
@@ -765,24 +667,24 @@
     <script src="./assets/js/main.js"></script>
 
     <script>
-    function openModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "block";
-    }
+        function openModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+        }
 
-    function closeModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
-    }
-
-    // Close the modal when clicking outside of it
-    window.onclick = function(event) {
-        var modal = document.getElementById("myModal");
-        if (event.target == modal) {
+        function closeModal() {
+            var modal = document.getElementById("myModal");
             modal.style.display = "none";
         }
-    }
-</script>
+
+        // Close the modal when clicking outside of it
+        window.onclick = function(event) {
+            var modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 
 
 

@@ -32,7 +32,7 @@ function register() {
           correct_message.css("display", "block");
           correct_message.html(`<p>${response.message}</p>`);
           $("#registrationForm")[0].reset(); // resets the form
-          window.location.href = 'index.php';
+          window.location.href = 'index.html';
         } else {
           correct_message.css("display", "none");
           error_message.css("display", "block");
