@@ -2,14 +2,14 @@
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-  session_destroy();
-  header('Location: index.html');
-  exit;
+    session_destroy();
+    header('Location: index.html');
+    exit;
 }
 if (isset($_POST['logout'])) {
-  session_destroy();
-  header('Location: index.html');
-  exit;
+    session_destroy();
+    header('Location: index.html');
+    exit;
 }
 
 require_once 'config.php';
@@ -24,7 +24,7 @@ if (!isset($_GET['page'])) {
 
 $start_from = ($page - 1) * $results_per_page;
 
-$sql = "SELECT job_name, job_description, job_price, job_duration, job_photo FROM user_jobs";
+$sql = "SELECT * FROM user_jobs";
 $result = $conn->query($sql);
 
 $user_jobs = [];
@@ -86,41 +86,79 @@ $conn->close();
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
+
         .single-job-items {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             border: 1px solid #ddd;
             padding: 15px;
             background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+
         }
-        .company-img img {
+
+        .company-img {
             width: 100%;
-            height: auto;
+            display: flex;
+            justify-content: center;
         }
+
+        .company-img img {
+            margin: 0;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .job-tittle {
+            margin-top: 15px;
+            width: 100%;
+
+        }
+
         .job-tittle h4 {
             margin: 10px 0;
             font-size: 18px;
+            font-weight: bold;
         }
+
         .job-tittle ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
-        .job-tittle ul li {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-        .job-tittle ul li i {
-            margin-right: 5px;
-        }
+
+
         .items-link a {
             display: inline-block;
             margin-top: 10px;
             color: #fff;
             background-color: #007bff;
-            padding: 5px 10px;
+            padding: 10px 20px;
             border-radius: 3px;
             text-decoration: none;
+            font-size: 16px;
+            text-align: center;
         }
 
+        .single-job-items p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .single-job-items h5 {
+            margin: 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .single-job-items .details {
+            font-size: 14px;
+            color: #666;
+        }
     </style>
 </head>
 
@@ -170,7 +208,6 @@ $conn->close();
                                             <a href="register.php" class="btn head-btn1">Register</a>
                                             <a href="login.php" class="btn head-btn2">Login</a>
                                         </div>';
-
                                 }
                                 ?>
 
@@ -245,27 +282,21 @@ $conn->close();
                     <div class="col-xl-10">
                         <!-- single-job-content -->
                         <div class="job-listings">
-                            <?php foreach ($job_listings as $job): ?>
+                            <?php foreach ($job_listings as $job) : ?>
                                 <div class="single-job-items mb-30">
                                     <div class="job-items">
                                         <div class="company-img">
-                                            <a href="job_details.html"><img src="<?= $job['job_photo'] ?>" alt=""></a>
+                                            <a href="finding.php"><img src="assets/uploads/<?= $job['job_photo'] ?>" alt=""></a>
                                         </div>
                                         <div class="job-tittle">
-                                            <a href="job_details.html">
+                                            <a href="finding.php">
                                                 <h4><?= $job['job_name'] ?></h4>
                                             </a>
-                                            <ul>
-                                                <li><?= $job['freelancer_id'] ?></li>
-                                                <li><?= $job['job_price'] ?></li>
-                                            </ul>
                                         </div>
                                     </div>
                                     <div class="items-link f-right">
-                                        <a href="job_details.html"><?= $job['type'] ?></a>
-                                        <span><?= $job['posted'] ?></span>
                                     </div>
-                                    </div>
+                                </div>
                             <?php endforeach; ?>
                         </div>
                         <div class="pagination-area mt-50">
@@ -279,8 +310,8 @@ $conn->close();
                                 </ul>
                             </nav>
                         </div>
+                    </div>
                 </div>
-            </div>
         </section>
         <!-- Featured_job_end -->
 

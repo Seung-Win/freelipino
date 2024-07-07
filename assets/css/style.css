@@ -5404,7 +5404,6 @@
     .single-job-items .company-img img{
         overflow:hidden;
         float:left;
-        margin-right:32px;
         z-index:999
     }
     @media (max-width: 767px){
