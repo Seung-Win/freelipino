@@ -138,45 +138,121 @@ if (isset($_POST['logout'])) {
     /* Spacing between image and text */
   }
 
-  /* Modal styles */
-  .modal-dialog {
-    max-width: 800px;
-  }
+  /* Modal backdrop */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
-  .modal-content {
-    border-radius: 6px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  }
+/* Modal dialog */
+.modal-dialog {
+  max-width: 600px;
+  margin: 1.75rem auto;
+}
 
-  .modal-header {
-    background-color: #007bff;
-    color: #fff;
-    border-bottom: none;
-  }
+/* Modal content */
+.modal-content {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
 
-  .modal-title {
-    font-size: 24px;
-  }
+/* Modal header */
+/* General Modal Styles */
+.modal-dialog {
+  max-width: 600px;
+  margin: 1.75rem auto;
+}
 
-  .modal-body {
-    padding: 20px;
-  }
+.modal-content {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-  .modal-footer {
-    border-top: none;
-  }
+.modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-bottom: none;
+  padding: 1rem 1.5rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
 
-  @media (max-width: 768px) {
-    .job-card {
-      padding: 10px;
-    }
-  }
+.modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
 
-  @media (max-width: 576px) {
-    .main-content {
-      padding: 20px 0;
-    }
-  }
+.close {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.close:hover,
+.close:focus {
+  color: #fff;
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+}
+
+.form-control,
+.form-control-file,
+.form-control:focus,
+.form-control-file:focus {
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 4px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+.btn-secondary {
+  border-radius: 4px;
+}
+
+.alert-warning {
+  border-radius: 4px;
+}
+
+/* Specific Modal Adjustments */
+#jobPhoto {
+  border: none;
+  padding: 0;
+}
+
+#jobCategory {
+  cursor: pointer;
+}
+
+
+
+
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -294,48 +370,63 @@ if (isset($_POST['logout'])) {
           </li>
         </ul>
       </nav>
-      <div class="modal fade" id="createJobModal" tabindex="-1" role="dialog" aria-labelledby="createJobModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="createJobModalLabel">Create Job</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form id="createJobForm">
-              <div class="modal-body">
-                <div id="errorMessage" class="alert alert-warning d-none"></div>
-                <div class="form-group">
-                  <label for="jobTitle">Job Title</label>
-                  <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
-                </div>
-                <div class="form-group">
-                  <label for="jobDescription">Job Description</label>
-                  <textarea class="form-control" id="jobDescription" name="jobDescription" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="jobPrice">Job Price</label>
-                  <input type="text" class="form-control" id="jobPrice" name="jobPrice" required>
-                </div>
-                <div class="form-group">
-                  <label for="jobDuration">Job Duration</label>
-                  <input type="text" class="form-control" id="jobDuration" name="jobDuration" required>
-                </div>
-                <div class="form-group">
-                  <label for="jobPhoto">Job Photo</label>
-                  <input type="file" class="form-control-file" id="jobPhoto" name="jobPhoto">
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Create Job</button>
-              </div>
-            </form>
+      <div class="modal fade" id="createJobModal" tabindex="-1" role="dialog" aria-labelledby="createJobModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createJobModalLabel">Create Job</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="createJobForm">
+        <div class="modal-body">
+          <div id="errorMessage" class="alert alert-warning d-none"></div>
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+          </div>
+          <div class="form-group">
+            <label for="jobDescription">Job Description</label>
+            <textarea class="form-control" id="jobDescription" name="jobDescription" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="jobPrice">Job Price</label>
+            <input type="text" class="form-control" id="jobPrice" name="jobPrice" required>
+          </div>
+          <div class="form-group">
+            <label for="jobDuration">Job Duration</label>
+            <input type="text" class="form-control" id="jobDuration" name="jobDuration" required>
+          </div>
+          <div class="form-group"> 
+    <label for="jobCategory">Job Category</label>
+    <select class="form-control" id="jobType" name="jobType" required>
+        <option value="">Select Job Type</option>
+        <option value="Tech">Technology</option>
+        <option value="Arts">Arts</option>
+        <option value="">IT</option>
+        <option value="Music">Music</option>
+    </select>
+</div>
+
+
+    </select>
+</div>
+
+          <div class="form-group">
+            <label for="jobPhoto">Job Photo</label>
+            <input type="file" class="form-control-file" id="jobPhoto" name="jobPhoto">
           </div>
         </div>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create Job</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
       <div class="modal fade" id="editJobModal" tabindex="-1" role="dialog" aria-labelledby="editJobModalLabel"
         aria-hidden="true">
@@ -371,7 +462,25 @@ if (isset($_POST['logout'])) {
                   <label for="editJobDuration">Job Duration</label>
                   <input type="text" class="form-control" id="job_duration" name="jobDuration" required>
                 </div>
+              
+                <div class="form-group">
+                <label for="jobCategory">Job Category</label>
+                   <select class="form-control" id="jobCategory" name="jobCategory">
+                    <option value="technology">Technology</option>
+                              <option value="art">Art</option>
+                              <option value="music">Music</option>
+                              <option value="chores">Chores</option>
+                            </select>
+                </div>   
+
+                <div class="form-group">
+                  <p>       </p>
+                  <label for="editJobDuration">Job Image</label>
+                  <input type="file" class="form-control-file" id="job_photo" name="jobPhoto" required>
+                </div>
               </div>
+              
+</div>
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

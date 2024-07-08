@@ -1,0 +1,53 @@
+/*------------------------------- Pagination Styles ----------------------------------------*/
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.ul-pagination {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+  color: black;
+}
+
+.page-link {
+  text-decoration: none;
+  padding: .8rem 1.6rem;
+  border: .1rem solid #3498db;
+  color: #3498db;
+  border-radius: .5rem;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 1.5rem;
+}
+
+.page-link:hover {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.page-link.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.page-link.active {
+  background-color: black;
+  color: black;
+}
+
+/* Pagination Info Styles */
+.pagination-info {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.pagination-info strong {
+  font-size: 1.5rem;
+  color: black;
+}
+/*--------------------------------- end of pagination styles ----------------------------*/

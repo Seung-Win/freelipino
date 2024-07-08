@@ -1,5 +1,25 @@
 <?php
 session_start();
+require 'config.php';
+
+if (!isset($_SESSION['user_id'])) {
+    session_destroy();
+    header('Location: index.html');
+    exit;
+}
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header('Location: index.html');
+    exit;
+}
+
+$sql_count = "SELECT COUNT(*) AS total FROM user_jobs";
+$result_count = $conn->query($sql_count);
+$row_count = $result_count->fetch_assoc();
+$total_count = $total_count = $row_count['total'];
+if(isset($_GET['page_no'])){
+    $_SESSION['page_no'] = $page_no=$_GET['page_no'];
+}
 ?>
 
 <!doctype html>
@@ -27,6 +47,8 @@ session_start();
   <link rel="stylesheet" href="assets/css/slick.css">
   <link rel="stylesheet" href="assets/css/nice-select.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pagination.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
 .logo {
@@ -175,6 +197,40 @@ button:hover {
 .items-link a:hover {
   background-color: #0056b3;
 }
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.input-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-form a {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 20px;
+}
+
+.search-form a:hover {
+    background-color: #0056b3;
+}
+
 </style>
 
 <body>
@@ -211,12 +267,6 @@ button:hover {
                   </nav>
                 </div>
                 <?php
-                                require 'config.php';
-                                if (isset($_POST['logout'])) {
-                                    session_destroy();
-                                    header('Location: index.html');
-                                    exit;
-                                }
 
                                 if (isset($_SESSION['email'])) {
                                     echo 'Welcome ' . ($_SESSION["first_name"]) . ' !';
@@ -251,17 +301,33 @@ button:hover {
     <!-- Hero Area Start-->
     <div class="slider-area ">
       <div class="single-slider section-overly slider-height2 d-flex align-items-center"
-        data-background="assets/img/hero/about.jpg">
+        data-background="assets/img/hero/Bg.jpg">
         <div class="container">
           <div class="row">
             <div class="col-xl-12">
               <div class="hero-cap text-center">
                 <h2>Get your job</h2>
+                <p></p>
               </div>
+              <div class="row">
+                            <div class="col-xl-8">
+                                <form action="#" class="search-box">
+                                    <div class="input-form">
+                                        <input type="text" placeholder="Job Title or keyword" id="searchInput" >
+                                    </div>
+                                    <div class="search-form">
+                                        <a href="#">Search</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
             </div>
+           
           </div>
         </div>
       </div>
+
+      
     </div>
     <!-- Hero Area End -->
     <!-- Job List Area Start -->
@@ -282,36 +348,8 @@ button:hover {
                   <h4>Filter Jobs</h4>
                 </div>
 
-                <button type="button" onclick="openModal()">
-                  Add Jobs
-                </button>
-
                 <div id="myModal" class="modal">
-                  <!-- Modal content -->
-                  <div class="modal-content">
-                    <span class="close" onclick="closeModal()">&times;</span>
-                    <h2>Job Details</h2>
-                    <form id="registrationForm">
-                      <div class="form-group">
-                        <label for="fname">Position:</label>
-                        <input type="text" id="position" name="position" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="mname">Qualifications:</label>
-                        <input type="text" id="qualification" name="qualification" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="lname">Service Rate:</label>
-                        <input type="text" id="rate" name="rate" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="address">Duration:</label>
-                        <input type="text" id="duration" name="duration" required>
-                      </div>
-                      <div class="form-group">
-                        <button type="submit">Submit</button>
-                      </div>
-                  </div>
+             
                 </div>
               </div>
             </div>
@@ -324,78 +362,18 @@ button:hover {
                 </div>
                 <!-- Select job items start -->
                 <div class="select-job-items2">
-                  <select name="select">
+                  <select id="sortSelect2" name="select">
                     <option value="">All Category</option>
-                    <option value="">Category 1</option>
-                    <option value="">Category 2</option>
-                    <option value="">Category 3</option>
-                    <option value="">Category 4</option>
+                    <option value="tech">Technology</option>
+                    <option value="art">Art</option>
+                    <option value="music">Music</option>
                   </select>
                 </div>
                 <!--  Select job items End-->
-                <!-- select-Categories start -->
-                <div class="select-Categories pt-80 pb-50">
-                  <div class="small-section-tittle2">
-                    <h4>Job Type</h4>
-                  </div>
-                  <label class="container">Full Time
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Part Time
-                    <input type="checkbox" checked="checked active">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Remote
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Freelance
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <!-- select-Categories End -->
+
               </div>
               <!-- single two -->
               <div class="single-listing">
-                <div class="small-section-tittle2">
-                  <h4>Job Location</h4>
-                </div>
-                <!-- Select job items start -->
-                <div class="select-job-items2">
-                  <select name="select">
-                    <option value="">Anywhere</option>
-                    <option value="">Category 1</option>
-                    <option value="">Category 2</option>
-                    <option value="">Category 3</option>
-                    <option value="">Category 4</option>
-                  </select>
-                </div>
-                <!--  Select job items End-->
-                <!-- select-Categories start -->
-                <div class="select-Categories pt-80 pb-50">
-                  <div class="small-section-tittle2">
-                    <h4>Experience</h4>
-                  </div>
-                  <label class="container">1-2 Years
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">2-3 Years
-                    <input type="checkbox" checked="checked active">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">3-6 Years
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">6-more..
-                    <input type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <!-- select-Categories End -->
               </div>
               <!-- single three -->
               <div class="single-listing">
@@ -405,126 +383,62 @@ button:hover {
                     <h4>Posted Within</h4>
                   </div>
                   <label class="container">Any
-                    <input type="checkbox">
+                    <input type="radio" name="dateFilter" value="any" checked>
                     <span class="checkmark"></span>
                   </label>
                   <label class="container">Today
-                    <input type="checkbox" checked="checked active">
+                    <input type="radio" name="dateFilter" value="today">
                     <span class="checkmark"></span>
                   </label>
                   <label class="container">Last 2 days
-                    <input type="checkbox">
+                    <input type="radio" name="dateFilter" value="2days">
                     <span class="checkmark"></span>
                   </label>
                   <label class="container">Last 3 days
-                    <input type="checkbox">
+                    <input type="radio" name="dateFilter" value="3days">
                     <span class="checkmark"></span>
                   </label>
                   <label class="container">Last 5 days
-                    <input type="checkbox">
+                    <input type="radio" name="dateFilter" value="5days">
                     <span class="checkmark"></span>
                   </label>
                   <label class="container">Last 10 days
-                    <input type="checkbox">
+                    <input type="radio" name="dateFilter" value="10days">
                     <span class="checkmark"></span>
                   </label>
                 </div>
                 <!-- select-Categories End -->
               </div>
               <div class="single-listing">
-                <!-- Range Slider Start -->
-                <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
-                  <div class="small-section-tittle2">
-                    <h4>Filter Jobs</h4>
-                  </div>
-                  <div class="widgets_inner">
-                    <div class="range_item">
-                      <!-- <div id="slider-range"></div> -->
-                      <input type="text" class="js-range-slider" value="" />
-                      <div class="d-flex align-items-center">
-                        <div class="price_text">
-                          <p>Price :</p>
-                        </div>
-                        <div class="price_value d-flex justify-content-center">
-                          <input type="text" class="js-input-from" id="amount" readonly />
-                          <span>to</span>
-                          <input type="text" class="js-input-to" id="amount" readonly />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </aside>
-                <!-- Range Slider End -->
+               
               </div>
             </div>
-            <!-- Job Category Listing End -->
           </div>
-          <!-- Right content -->
           <div class="col-xl-9 col-lg-9 col-md-8">
-            <!-- Featured_job_start -->
             <section class="featured-job-area">
               <div class="container">
-                <!-- Count of Job list Start -->
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="count-job mb-35">
-                      <span>39, 782 Jobs found</span>
-                      <!-- Select job items start -->
+                      <span><?php echo $total_count; ?> Jobs found</span>
                       <div class="select-job-items">
                         <span>Sort by</span>
-                        <select name="select">
-                          <option value="">None</option>
-                          <option value="">job list</option>
-                          <option value="">job list</option>
-                          <option value="">job list</option>
-                        </select>
+                            <form method="post" id="sortJobsForm">
+                              <select id="sortSelect" name="select">
+                                    <option value="">None</option>
+                                    <option value="name">Name</option>
+                                    <option value="pay">Pay</option>
+                                    <option value="duration">Duration</option>
+                                </select>
+                                <input type="hidden" name="formId" value="sortJobs">
+                            </form>
                       </div>
                       <!--  Select job items End-->
                     </div>
                   </div>
                 </div>
                 <!-- Count of Job list End -->
-
-                <?php
-
-
-                                // Fetch one variation per product (you can adjust the criteria as needed)
-                                $sql = "SELECT job_id, job_name, job_price, job_photo, job_duration
-                                FROM user_jobs ";
-
-                                $result = $conn->query($sql);
-
-                                // Check if there are products
-                                if ($result->num_rows > 0) {
-                                    // Begin product container
-                                    while ($row = $result->fetch_assoc()) {
-                                ?>
-                <!-- single-job-content -->
-                <div class=" single-job-items mb-30">
-                  <div class="job-items">
-                    <div class="company-img">
-                      <a href="#"><img src="assets/uploads/<?= $row['job_photo'] ?>" alt=""></a>
-                    </div>
-                    <div class="job-tittle job-tittle2">
-                      <a href="#">
-                        <h4><?= $row['job_name'] ?></h4>
-                      </a>
-                      <ul>
-                        <li><i class="fas fa-map-marker-alt"></i><?= $row['job_duration'] ?></li>
-                        <li>₱<?= $row['job_price'] ?></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="items-link items-link2 f-right">
-                    <a href="job_details.php">More Info</a>
-                  </div>
-                </div>
-
-                <?php
-                                    }
-                                }
-                                ?>
-
+                <div id="jobListings"></div>
               </div>
             </section>
             <!-- Featured_job_end -->
@@ -532,27 +446,6 @@ button:hover {
         </div>
       </div>
     </div>
-    <!-- Job List Area End -->
-    <!--Pagination Start  -->
-    <div class="pagination-area pb-115 text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="single-wrap d-flex justify-content-center">
-              <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-start">
-                  <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                  <li class="page-item"><a class="page-link" href="#">02</a></li>
-                  <li class="page-item"><a class="page-link" href="#">03</a></li>
-                  <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Pagination End  -->
 
   </main>
   <footer>
@@ -574,19 +467,6 @@ button:hover {
 
             </div>
           </div>
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-            <div class="single-footer-caption mb-50">
-              <div class="footer-tittle">
-                <h4>Contact Info</h4>
-                <ul>
-                  <li>
-                    <p>Address : Tandang Sora, Quezon City
-                      Philippines </p>
-                  </li>
-                  <li><a href="#">Phone : +1008 12314561 </a></li>
-                  <li><a href="#">Email : info@freelipino.com</a></li>
-                </ul>
-              </div>
 
             </div>
           </div>
@@ -748,6 +628,48 @@ button:hover {
       modal.style.display = "none";
     }
   }
+
+  $(document).ready(function() {
+    function loadJobListings() {
+        var selectedSortOption = $('#sortSelect').val(); // Get the selected sort option
+        var selectedSortOption2 = $('#sortSelect2').val();
+        var selectedDateFilter = $('input[type="radio"][name="dateFilter"]:checked').val();
+        var searchValue = $('#searchInput').val();
+
+        $.ajax({
+            type: "GET",
+            url: "controller/sort_job_controller.php",
+            data: {
+                select: selectedSortOption,
+                select2: selectedSortOption2,
+                select3: selectedDateFilter,
+                select4: searchValue
+            },
+            success: function(response) {
+                $('#jobListings').html(response);
+            }
+        });
+    }
+
+    function getQueryParam(param) {
+        var urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    var initialSearchQuery = getQueryParam('searchQuery');
+    if (initialSearchQuery) {
+        $('#searchInput').val(initialSearchQuery); // Set the search input to the initial query
+    }
+    
+    // Load job listings on page load
+    loadJobListings();
+
+    // Reload job listings when the selection changes
+    $('#sortSelect').change(loadJobListings);
+    $('#sortSelect2').change(loadJobListings);
+    $('input[type="radio"][name="dateFilter"]').change(loadJobListings);
+    $('#searchInput').on('input', loadJobListings);
+});
   </script>
 
 

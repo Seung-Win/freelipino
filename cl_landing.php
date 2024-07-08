@@ -14,8 +14,7 @@ if (isset($_POST['logout'])) {
 
 require_once 'config.php';
 
-$results_per_page = 6; // Number of job listings per page
-
+$results_per_page = 6; 
 if (!isset($_GET['page'])) {
     $page = 1;
 } else {
@@ -37,11 +36,32 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
-// Pagination logic
+
 $sql_count = "SELECT COUNT(*) AS total FROM user_jobs";
 $result_count = $conn->query($sql_count);
 $row_count = $result_count->fetch_assoc();
 $total_pages = ceil($row_count['total'] / $results_per_page);
+
+
+$sql1 = "SELECT COUNT(*) AS total FROM user_jobs WHERE job_category='Technology'";
+$result1 = $conn->query($sql1);
+$row1 = $result1->fetch_assoc();
+$technology = $row1['total'];
+
+$sql2 = "SELECT COUNT(*) AS total FROM user_jobs WHERE job_category='Art'";
+$result2 = $conn->query($sql2);
+$row2 = $result2->fetch_assoc();
+$art = $row2['total'];
+
+$sql3 = "SELECT COUNT(*) AS total FROM user_jobs WHERE job_category='Information Technology'";
+$result3 = $conn->query($sql3);
+$row3 = $result3->fetch_assoc();
+$infotech = $row3['total'];
+
+$sql4 = "SELECT COUNT(*) AS total FROM user_jobs WHERE job_category='Music'";
+$result4 = $conn->query($sql4);
+$row4 = $result4->fetch_assoc();
+$music = $row4['total'];
 $conn->close();
 ?>
 
@@ -159,6 +179,27 @@ $conn->close();
             font-size: 14px;
             color: #666;
         }
+
+      
+.searchBTN {
+    width:100%;
+        height:70px;
+        background:#fb246a;
+        font-size:20px;
+        line-height:1;
+        text-align:center;
+        color:#fff;
+        display:block;
+        padding:15px;
+        border-radius:0px;
+        text-transform:capitalize;
+        font-family:"Muli",sans-serif;
+        letter-spacing:0.1em;
+        line-height:1.2;
+        line-height:38px;
+        font-size:14px
+}
+
     </style>
 </head>
 
@@ -241,23 +282,14 @@ $conn->close();
                         </div>
                         <div class="row">
                             <div class="col-xl-8">
-                                <form action="#" class="search-box">
-                                    <div class="input-form">
-                                        <input type="text" placeholder="Job Tittle or keyword">
-                                    </div>
-                                    <div class="select-form">
-                                        <div class="select-itms">
-                                            <select name="select" id="select1">
-                                                <option value="">NCR</option>
-                                                <option value="">Manila</option>
-                                                <option value="">Makati</option>
-                                                <option value="">Cavite</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="search-form">
-                                        <a href="#">Search</a>
-                                    </div>
+                            <form action="finding.php" method="GET" class="search-box">
+                    <div class="input-form">
+                        <input type="text" name="searchQuery" placeholder="Job Title or keyword" id="searchInput">
+                    </div>
+                    <div class="search-form">
+                    <button type="submit" class="searchBTN">Search</button>
+                    </div>
+                </form>
                                 </form>
                             </div>
                         </div>
@@ -313,7 +345,7 @@ $conn->close();
                     </div>
                 </div>
         </section>
-        <!-- Featured_job_end -->
+   
 
         <!-- Our Services Start -->
         <div class="our-services section-pad-t30">
@@ -334,8 +366,8 @@ $conn->close();
                                 <span class="flaticon-tour"></span>
                             </div>
                             <div class="services-cap">
-                                <h5><a href="job_listing.html">Design & Creative</a></h5>
-                                <span>(653)</span>
+                                <h5><a href="job_listing.html">Arts</a></h5>
+                                <span>(<?php echo $art ?>)</span>
                             </div>
                         </div>
                     </div>
@@ -345,19 +377,8 @@ $conn->close();
                                 <span class="flaticon-cms"></span>
                             </div>
                             <div class="services-cap">
-                                <h5><a href="job_listing.html">Design & Development</a></h5>
-                                <span>(658)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="flaticon-report"></span>
-                            </div>
-                            <div class="services-cap">
-                                <h5><a href="job_listing.html">Sales & Marketing</a></h5>
-                                <span>(658)</span>
+                                <h5><a href="job_listing.html">Technology</a></h5>
+                                <span>(<?php echo $technology ?>)</span>
                             </div>
                         </div>
                     </div>
@@ -367,52 +388,21 @@ $conn->close();
                                 <span class="flaticon-app"></span>
                             </div>
                             <div class="services-cap">
-                                <h5><a href="job_listing.html">Mobile Application</a></h5>
-                                <span>(658)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="flaticon-helmet"></span>
-                            </div>
-                            <div class="services-cap">
-                                <h5><a href="job_listing.html">Construction</a></h5>
-                                <span>(658)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="flaticon-high-tech"></span>
-                            </div>
-                            <div class="services-cap">
                                 <h5><a href="job_listing.html">Information Technology</a></h5>
-                                <span>(658)</span>
+                                <span>(<?php echo $infotech ?>)</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="flaticon-real-estate"></span>
-                            </div>
-                            <div class="services-cap">
-                                <h5><a href="job_listing.html">Real Estate</a></h5>
-                                <span>(658)</span>
-                            </div>
-                        </div>
-                    </div>
+                    
+                    
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-services text-center mb-30">
                             <div class="services-ion">
                                 <span class="flaticon-content"></span>
                             </div>
                             <div class="services-cap">
-                                <h5><a href="job_listing.html">Content Writer</a></h5>
-                                <span>(658)</span>
+                                <h5><a href="job_listing.html">Music</a></h5>
+                                <span>(<?php echo $music ?>)</span>
                             </div>
                         </div>
                     </div>
@@ -422,7 +412,7 @@ $conn->close();
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="browse-btn2 text-center mt-50">
-                            <a href="job_listing.html" class="border-btn2">Browse All Sectors</a>
+                            <a href="finding.php" class="border-btn2">Browse All</a>
                         </div>
                     </div>
                 </div>
@@ -495,6 +485,26 @@ $conn->close();
     <!-- Jquery Plugins, main Jquery -->
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
+    <script>
+        $(document).ready(function() {
+            function loadJobListings() {
+
+                var searchValue = $('#searchInput').val();
+
+                $.ajax({
+                    type: "GET",
+                    url: "controller/sort_job_controller.php",
+                    data: {
+                        select4: searchValue
+                    },
+                    success: function(response) {
+                        $('#jobListings').html(response);
+                    }
+                });
+            }
+            $('#searchForm').submit(loadJobListings);
+        });
+        </script>
 
 </body>
 

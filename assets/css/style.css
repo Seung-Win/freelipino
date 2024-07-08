@@ -165,7 +165,7 @@
         color:#635c5c
     }
     a:hover{
-        color:#fff
+        color:#635c5c
     }
     a:focus,a:hover,.portfolio-cat a:hover,.footer -menu li a:hover{
         text-decoration:none
@@ -173,6 +173,9 @@
     a,button{
         color:#fff;
         outline:medium none
+    }
+    .page-no{
+        color:#3498db;
     }
     button:focus,input:focus,input:focus,textarea,textarea:focus{
         outline:0
@@ -1715,8 +1718,8 @@
     }
     @media only screen and (min-width: 1200px) and (max-width: 1600px){
         .section-pad-t30{
-            padding-top:195px;
-            padding-bottom:195px
+            padding-top:50px;
+            padding-bottom:50px
         }
     }
     @media only screen and (min-width: 992px) and (max-width: 1199px){
@@ -1744,13 +1747,13 @@
         }
     }
     .feature-padding{
-        padding-top:195px;
-        padding-bottom:130px
+        padding-top:50px;
+        padding-bottom:50px
     }
     @media only screen and (min-width: 992px) and (max-width: 1199px){
         .feature-padding{
-            padding-top:195px;
-            padding-bottom:130px
+            padding-top:50px;
+            padding-bottom:50px
         }
     }
     @media only screen and (min-width: 768px) and (max-width: 991px){
@@ -4792,7 +4795,6 @@
         box-shadow:0px 6px 29px 0px rgba(36,43,94,0.08);
         display:flex;
         flex-wrap:wrap;
-        justify-content:space-between
     }
     form.search-box .input-form{
         width:45%;
