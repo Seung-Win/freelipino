@@ -1,4 +1,5 @@
 <?php
+    require 'config.php';
   session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -212,34 +213,41 @@ if (!isset($_SESSION['user_id'])) {
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                        
+                        $user_id = $_SESSION['user_id'];
+
+                        $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
+                                  FROM transactions t
+                                  JOIN user_jobs uj ON t.job_id = uj.job_id
+                                  WHERE uj.freelancer_id = '$user_id' AND transaction_end IS NULL;";
+                            
+                            $query_run = mysqli_query($conn, $query);
+
+                            if (mysqli_num_rows($query_run) > 0) {
+                                foreach ($query_run as $row) {
+                                    
+                        ?>
                         <tr>
-                            <td>1</td>
-                            <td>Job A</td>
-                            <td>Client123</td>
-                            <td>2024-06-30 10:00 AM</td>
+                            <td><?= $row['transaction_id'] ?></td>
+                            <td><?= $row['job_name'] ?></td>
+                            <td><?= $row['client_id']   ?></td>
+                            <td><?= date('Y-m-d', strtotime($row['transaction_start']))?></td>
                             <td>Ongoing</td>
-                            <td>$50.00</td>
+                            <td>₱ <?= $row['job_price']?></td>
                             <td>
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="proof" accept="image/*" onchange="this.form.submit()">
-                                </form>
-                                <img src="path/to/proof1.jpg" alt="Proof of Payment" class="proof-img" data-img="path/to/proof1.jpg">
+                            <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+                            <input type="file" id="proof" name="proof" accept="image/*" data-transaction-id="<?= $row['transaction_id'] ?>">
+                            </form>
                             </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Job B</td>
-                            <td>Client456</td>
-                            <td>2024-07-01 09:00 AM</td>
-                            <td>Ongoing</td>
-                            <td>$100.00</td>
-                            <td>
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="proof" accept="image/*" onchange="this.form.submit()">
-                                </form>
-                                <img src="path/to/proof2.jpg" alt="Proof of Payment" class="proof-img" data-img="path/to/proof2.jpg">
-                            </td>
-                        </tr>
+                        <?php
+                             }
+                        } else {
+                            echo '<tr><td colspan="7">No ongoing transactions</td></tr>';
+                            echo $user_id;
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -259,34 +267,33 @@ if (!isset($_SESSION['user_id'])) {
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                            $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
+                            FROM transactions t
+                            JOIN user_jobs uj ON t.job_id = uj.job_id
+                            WHERE uj.freelancer_id = '$user_id' AND transaction_end IS NOT NULL;";
+
+                            $query_run = mysqli_query($conn, $query);
+
+                            if (mysqli_num_rows($query_run) > 0) {
+                                foreach ($query_run as $row) {
+                        ?>
                         <tr>
-                            <td>3</td>
-                            <td>Job C</td>
-                            <td>Client789</td>
-                            <td>2024-06-28 10:00 AM</td>
-                            <td>2024-06-28 12:00 PM</td>
-                            <td>$75.00</td>
-                            <td>
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="proof" accept="image/*" onchange="this.form.submit()">
-                                </form>
-                                <img src="path/to/proof3.jpg" alt="Proof of Payment" class="proof-img" data-img="path/to/proof3.jpg">
-                            </td>
+                            <td><?= $row['transaction_id'] ?></td>
+                            <td><?= $row['job_name'] ?></td>
+                            <td><?= $row['client_id']   ?></td>
+                            <td><?= date('Y-m-d', strtotime($row['transaction_start']))?></td>
+                            <td><?= date('Y-m-d', strtotime($row['transaction_end']))?></td>
+                            <td>₱ <?= $row['job_price']?></td>
+                            <td><img src="path/to/proof3.jpg" alt="Proof of Payment" class="proof-img" data-img="path/to/proof3.jpg"></td>
                         </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Job D</td>
-                            <td>Client012</td>
-                            <td>2024-06-29 09:00 AM</td>
-                            <td>2024-06-29 11:30 AM</td>
-                            <td>$125.00</td>
-                            <td>
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="proof" accept="image/*" onchange="this.form.submit()">
-                                </form>
-                                <img src="path/to/proof4.jpg" alt="Proof of Payment" class="proof-img" data-img="path/to/proof4.jpg">
-                            </td>
-                        </tr>
+                        <?php
+                             }
+                        } else {
+                            echo '<tr><td colspan="7">No finished transactions</td></tr>';
+                            echo $user_id;
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -371,6 +378,7 @@ if (!isset($_SESSION['user_id'])) {
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
     <script scr="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         calculateTotalEarnings();
@@ -436,6 +444,32 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function () {
     modal.style.display = "none";
 }
+
+$(document).ready(function() {
+    $('#proof').change(function() {
+        var formData = new FormData();
+        var files = $('#proof')[0].files;
+        var transactionId = $(this).data('transaction-id'); // Retrieve the transaction ID
+
+        if (files.length > 0) {
+            formData.append('proof', files[0]);
+            formData.append('transaction_id', transactionId); // Append the transaction ID to the FormData
+
+            $.ajax({
+                url: 'controller/upload_proof_controller.php',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    // Parse the JSON response
+                    alert("working");
+                }
+            });
+        }
+    });
+});
+
 </script>
 
 </body>

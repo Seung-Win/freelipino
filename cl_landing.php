@@ -230,7 +230,7 @@ $conn->close();
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="finding.php">Find Freelancer </a></li>
-                                            <li><a href="about.php">About</a></li>
+                                            <li><a href="CLtransaction.php">Transactions</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -255,7 +255,7 @@ $conn->close();
 
                             </div>
                         </div>
-                        <!-- Mobile Menu -->
+                       
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
@@ -263,7 +263,6 @@ $conn->close();
                 </div>
             </div>
         </div>
-        <!-- Header End -->
     </header>
     <main>
 
@@ -297,7 +296,7 @@ $conn->close();
                 </div>
             </div>
         </div>
-        <!-- slider Area End-->
+        
 
         <section class="featured-job-area feature-padding">
             <div class="container">

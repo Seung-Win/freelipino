@@ -67,7 +67,7 @@ if (isset($_POST['save_job'])) {
       $insert_query = "INSERT INTO user_jobs (freelancer_id, job_name, job_description, job_price, job_duration, job_photo, job_category)
                              VALUES (?, ?, ?, ?, ?, ?, ?)";
       $statement_insert = mysqli_prepare($conn, $insert_query);
-      mysqli_stmt_bind_param($statement_insert, "ississ", $freelancer_id, $job_title, $job_description, $job_price, $job_duration, $newImageName, $job_category);
+      mysqli_stmt_bind_param($statement_insert, "ississs", $freelancer_id, $job_title, $job_description, $job_price, $job_duration, $newImageName, $job_category);
 
       if (mysqli_stmt_execute($statement_insert)) {
         $res = [
@@ -111,7 +111,7 @@ if (isset($_GET['job_id'])) {
 
   $query = "SELECT * FROM user_jobs WHERE job_id = ?";
   $stmt = mysqli_prepare($conn, $query);
-  mysqli_stmt_bind_param($stmt, "s", $job_id);
+  mysqli_stmt_bind_param($stmt, "i", $job_id);
   mysqli_stmt_execute($stmt);
   $query_run = mysqli_stmt_get_result($stmt);
 
@@ -142,6 +142,7 @@ if (isset($_POST['update_job'])) {
   $job_description = mysqli_real_escape_string($conn, $_POST['jobDescription']);
   $job_price = mysqli_real_escape_string($conn, $_POST['jobPrice']);
   $job_duration = mysqli_real_escape_string($conn, $_POST['jobDuration']);
+  $job_category = mysqli_real_escape_string($conn, $_POST['job_Category']);
 
   // Check if the image file is uploaded successfully
   if (isset($_FILES["jobPhoto"]) && $_FILES["jobPhoto"]["error"] === UPLOAD_ERR_OK) {
@@ -197,12 +198,12 @@ if (isset($_POST['update_job'])) {
 
       // Prepare the update statement
       $query = "UPDATE user_jobs 
-      SET job_name=?, job_description=?, job_price=?, job_duration=?, job_photo=?
+      SET job_name=?, job_description=?, job_price=?, job_duration=?, job_photo=?, job_category=?
       WHERE job_id=?";
       $statement = mysqli_prepare($conn, $query);
-
+      
       // Bind parameters
-      mysqli_stmt_bind_param($statement, "ssissi", $job_title, $job_description, $job_price, $job_duration, $job_photo, $job_id);
+      mysqli_stmt_bind_param($statement, "ssisssi", $job_title, $job_description, $job_price, $job_duration, $newImageName, $job_category, $job_id);
 
       // Execute the statement
       $query_run = mysqli_stmt_execute($statement);

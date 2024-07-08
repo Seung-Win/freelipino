@@ -11,6 +11,48 @@ if (isset($_POST['logout'])) {
   header('Location: index.html');
   exit;
 }
+
+if (!isset($_GET['page_no'])) {
+  $page_no = 1;
+} else {
+  $page_no = $_GET['page_no'];
+}
+
+
+require 'config.php';
+
+// Total rows or records to display
+$total_records_per_page = 3;
+    
+// Get the page offset for the LIMIT query
+$offset = ($page_no - 1) * $total_records_per_page;
+    
+// Get previous page
+$previous_page = $page_no - 1;
+    
+// Get the next page
+$next_page = $page_no + 1;
+    
+      // Get the total count of records
+      $result_count = mysqli_query($conn, "SELECT COUNT(*) as total_records FROM user_jobs") or die(mysqli_error($conn));
+    
+      // Total records
+      $records = mysqli_fetch_array($result_count);
+    
+      // Store total_records to a variable
+      $total_records = $records['total_records'];
+    
+      // Get total pages
+      $total_no_of_pages = ceil($total_records / $total_records_per_page);
+    
+      // Query string if and elseif
+      $sql = "SELECT * FROM user_jobs WHERE freelancer_id ='" . $_SESSION['user_id'] . "'";
+    
+      $sql .= " LIMIT $offset , $total_records_per_page";
+    
+      // Result
+      $result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+
 ?>
 
 <!doctype html>
@@ -30,12 +72,13 @@ if (isset($_POST['logout'])) {
   <link rel="stylesheet" href="assets/css/price_rangs.css">
   <link rel="stylesheet" href="assets/css/slicknav.css">
   <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/nice-select.css">
   <link rel="stylesheet" href="assets/css/magnific-popup.css">
   <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
   <link rel="stylesheet" href="assets/css/themify-icons.css">
   <link rel="stylesheet" href="assets/css/slick.css">
-  <link rel="stylesheet" href="assets/css/nice-select.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/pagination.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 
   <style>
@@ -194,19 +237,11 @@ if (isset($_POST['logout'])) {
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .form-group label {
   font-weight: 600;
-}
-
-.form-control,
-.form-control-file,
-.form-control:focus,
-.form-control-file:focus {
-  border-radius: 4px;
-  border: 1px solid #ced4da;
 }
 
 .form-control:focus {
@@ -215,7 +250,7 @@ if (isset($_POST['logout'])) {
 }
 
 .modal-footer {
-  padding: 1rem 1.5rem;
+  
   border-top: none;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -240,19 +275,21 @@ if (isset($_POST['logout'])) {
   border-radius: 4px;
 }
 
-/* Specific Modal Adjustments */
-#jobPhoto {
-  border: none;
-  padding: 0;
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
 }
-
-#jobCategory {
-  cursor: pointer;
-}
-
-
-
-
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -327,17 +364,9 @@ if (isset($_POST['logout'])) {
       <div class="mt-4" id="job_container">
 
         <?php
-        require 'config.php';
-        $userid =  $_SESSION['user_id'];
-        $sql_query = "SELECT job_id, job_name, job_description, job_price, job_duration, job_photo
-                                  FROM user_jobs 
-                                  WHERE freelancer_id = ?";
+        if (mysqli_num_rows($result) > 0) {
 
-        $statement = mysqli_prepare($conn, $sql_query);
-        mysqli_stmt_bind_param($statement, "i", $userid);
-        if (mysqli_stmt_execute($statement)) {
-          $result_query = mysqli_stmt_get_result($statement);
-          while ($row = $result_query->fetch_assoc()) {
+          foreach ($result as $row)  {
         ?>
         <div class="card mb-3 job-card">
           <div class="card-body">
@@ -354,22 +383,26 @@ if (isset($_POST['logout'])) {
         </div>
         <?php
           }
-        }
+        }$conn->close();
         ?>
       </div>
-      <nav aria-label="Job Pagination">
-        <ul class="pagination justify-content-center mt-4">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
+      <?php
+
+      echo "<nav class='pagination'>";
+      echo "<ul class='ul-pagination'>";
+      
+      echo "<li><a class='page-link " . ($page_no <= 1 ? 'disabled' : '') . "' " . ($page_no > 1 ? 'href="?page_no=' . $previous_page . '"' : '') . ">Previous</a></li>";
+      
+      for ($i = 1; $i <= $total_no_of_pages; $i++) {
+          echo "<li><a class='page-no' href='?page_no=" . $i . "' class='" . ($page_no == $i ? 'active' : '') . "'>" . $i . "</a></li>";
+      }
+      
+      echo "<li><a class='page-link " . ($page_no >= $total_no_of_pages ? 'disabled' : '') . "' " . ($page_no < $total_no_of_pages ? 'href="?page_no=' . $next_page . '"' : '') . ">Next</a></li>";
+      
+      echo "</ul>";
+      echo "</nav>";
+      ?>  
+
       <div class="modal fade" id="createJobModal" tabindex="-1" role="dialog" aria-labelledby="createJobModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -399,20 +432,15 @@ if (isset($_POST['logout'])) {
             <input type="text" class="form-control" id="jobDuration" name="jobDuration" required>
           </div>
           <div class="form-group"> 
-    <label for="jobCategory">Job Category</label>
-    <select class="form-control" id="jobType" name="jobType" required>
-        <option value="">Select Job Type</option>
-        <option value="Tech">Technology</option>
-        <option value="Arts">Arts</option>
-        <option value="">IT</option>
-        <option value="Music">Music</option>
-    </select>
-</div>
-
-
-    </select>
-</div>
-
+            <label for="jobCategory">Job Category</label>
+            <select class="form-control" id="jobCategory" name="jobCategory" required>
+                <option value="">Select Job Type</option>
+                <option value="Technology">Technology</option>
+                <option value="Arts">Arts</option>
+                <option value="Information Technology">IT</option>
+                <option value="Music">Music</option>
+            </select>
+          </div>
           <div class="form-group">
             <label for="jobPhoto">Job Photo</label>
             <input type="file" class="form-control-file" id="jobPhoto" name="jobPhoto">
@@ -422,6 +450,11 @@ if (isset($_POST['logout'])) {
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Create Job</button>
         </div>
+
+
+    
+</div>
+
       </form>
     </div>
   </div>
@@ -462,30 +495,34 @@ if (isset($_POST['logout'])) {
                   <label for="editJobDuration">Job Duration</label>
                   <input type="text" class="form-control" id="job_duration" name="jobDuration" required>
                 </div>
-              
+                <div>
+                  <p> </p>
+      </div>
                 <div class="form-group">
-                <label for="jobCategory">Job Category</label>
-                   <select class="form-control" id="jobCategory" name="jobCategory">
-                    <option value="technology">Technology</option>
-                              <option value="art">Art</option>
-                              <option value="music">Music</option>
-                              <option value="chores">Chores</option>
-                            </select>
+                <label for="job_Category">Job Category</label>
+                <select class="form-control" id="job_category" name="job_Category" required>
+                  <option value="">Select Job Type</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Arts">Arts</option>
+                  <option value="Information Technology">IT</option>
+                  <option value="Music">Music</option>
+                </select>
                 </div>   
-
+                <div>
+                  <p> </p>
+                </div>
                 <div class="form-group">
                   <p>       </p>
                   <label for="editJobDuration">Job Image</label>
                   <input type="file" class="form-control-file" id="job_photo" name="jobPhoto" required>
                 </div>
-              </div>
-              
-</div>
-
-              <div class="modal-footer">
+                <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
               </div>
+              </div>
+              
+</div>
           </div>
           </form>
         </div>
@@ -536,7 +573,7 @@ if (isset($_POST['logout'])) {
               <span class="flaticon-tour"></span>
             </div>
             <div class="process-cap">
-              <h5>3. Let the Job don</h5>
+              <h5>3. Let the Job done</h5>
               <p>Rest assured that our freelancers will get the job done at your own timeline.</p>
             </div>
           </div>

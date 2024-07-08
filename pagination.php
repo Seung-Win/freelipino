@@ -31,7 +31,7 @@ function getPaginatedData($table, $where = "", $date = "", $wheresearch="", $ord
   // Query string if and elseif
   if ($table === 'user_jobs') {
     $sql = "SELECT * FROM $table $where $date $wheresearch $orderBy";;
-  } 
+  }
 
   $sql .= " LIMIT $offset , $total_records_per_page";
 

@@ -407,7 +407,6 @@ button:hover {
                     <span class="checkmark"></span>
                   </label>
                 </div>
-                <!-- select-Categories End -->
               </div>
               <div class="single-listing">
                

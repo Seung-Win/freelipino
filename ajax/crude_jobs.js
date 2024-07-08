@@ -36,13 +36,13 @@ $(document).on('submit', '#createJobForm', function(e) {
   });
 });
 
-// to show the edit
+// to show the value of old
 $(document).on('click', '.edit_product_button', function() {
   let job_id = $(this).val();
 
   $.ajax({
-    type:"GET",
-    url:"/freelipino/controller/crude_job_controller.php?job_id=" + job_id,
+    type: "GET",
+    url: "/freelipino/controller/crude_job_controller.php?job_id=" + job_id,
     success: function(response) {
       console.log(response);
 
@@ -55,11 +55,29 @@ $(document).on('click', '.edit_product_button', function() {
         $('#job_description').val(res.data.job_description);
         $('#job_price').val(res.data.job_price);
         $('#job_duration').val(res.data.job_duration);
+
+        // Debugging logs
+        console.log("Job Category from AJAX:", res.data.job_category);
+        console.log("Dropdown before setting value:", $('#job_category').val());
+
+        // Ensure the correct category is selected
+        $('#job_category').val(res.data.job_category).trigger('change');
+
+        // Debugging logs
+        console.log("Dropdown after setting value:", $('#job_category').val());
+        console.log("All dropdown options:", $('#job_category option').map(function() { return $(this).val(); }).get());
+
+        $('#job_category option').each(function() {
+          console.log("Option value:", $(this).val(), "Selected:", $(this).is(':selected'));
+        });
+
         $('#editJobModal').modal('show');
       }
     }
-  })
-})
+  });
+});
+
+
 
 
 // to update the edited job
