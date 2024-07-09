@@ -1,16 +1,16 @@
 <?php
-    require 'config.php';
-  session_start();
+require 'config.php';
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    session_destroy();
-    header('Location: index.html');
-    exit;
+  session_destroy();
+  header('Location: index.html');
+  exit;
 }
-  if (isset($_POST['logout'])) {
-    session_destroy();
-    header('Location: index.html');
-    exit;
+if (isset($_POST['logout'])) {
+  session_destroy();
+  header('Location: index.html');
+  exit;
 }
 ?>
 
@@ -18,301 +18,324 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Freelipino</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/logo.png">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Freelipino</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/logo.png">
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/price_rangs.css">
-    <link rel="stylesheet" href="assets/css/slicknav.css">
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/price_rangs.css">
+  <link rel="stylesheet" href="assets/css/slicknav.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="assets/css/themify-icons.css">
+  <link rel="stylesheet" href="assets/css/slick.css">
+  <link rel="stylesheet" href="assets/css/nice-select.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 
-    <style>
-        .logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+  <style>
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-        .logo img {
-            max-width: 100%;
-            height: auto;
-        }
-        main {
-        padding: 60px 0; /* Adjust padding as needed */
-    }
+  .logo img {
+    max-width: 100%;
+    height: auto;
+  }
 
-    .transaction-history {
-        margin-bottom: 40px; /* Space between sections */
-    }
+  main {
+    padding: 60px 0;
+    /* Adjust padding as needed */
+  }
 
-    .transaction-history table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
+  .transaction-history {
+    margin-bottom: 40px;
+    /* Space between sections */
+  }
 
-    .transaction-history th,
-    .transaction-history td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
+  .transaction-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
 
-    .transaction-history th {
-        background-color: #f2f2f2;
-    }
+  .transaction-history th,
+  .transaction-history td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
 
-    .proof-img {
-        max-width: 50px;
-        cursor: pointer;
-    }
+  .transaction-history th {
+    background-color: #f2f2f2;
+  }
 
-    .total-counter {
-        margin-top: 40px;
-    }
+  .proof-img {
+    max-width: 50px;
+    cursor: pointer;
+  }
 
-    .total-earnings {
-        text-align: center;
-        padding: 20px;
-        background-color: #f0f0f0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+  .total-counter {
+    margin-top: 40px;
+  }
 
-   
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        padding-top: 60px;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0, 0, 0);
-        background-color: rgba(0, 0, 0, 0.9);
-    }
+  .total-earnings {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 
-    .modal-content {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-    }
 
-    .close {
-        position: absolute;
-        top: 15px;
-        right: 35px;
-        color: #fff;
-        font-size: 40px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+  }
 
-    .close:hover,
-    .close:focus {
-        color: #bbb;
-        text-decoration: none;
-        cursor: pointer;
-    }
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+  }
 
-    #caption {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-        text-align: center;
-        color: #ccc;
-        padding: 10px 0;
-        height: 150px;
-    }
-</style>
-   
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+  }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
-                </div>
-            </div>
+  <div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+      <div class="preloader-inner position-relative">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img pere-text">
+          <img src="assets/img/logo/logo.png" alt="">
         </div>
+      </div>
     </div>
-    <header>
-        <div class="header-area header-transparrent">
-            <div class="headder-top header-sticky">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-3 col-md-2">
-                            <div class="logo">
-                                <a href="fl_landing.php"><img src="assets/img/logo/logo.png" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-9">
-                            <div class="menu-wrapper">
-                                <div class="main-menu">
-                                    <nav class="d-none d-lg-block">
-                                        <ul id="navigation">
-                                            <li><a href="fl_landing.php">Jobs</a></li>
-                                            <li><a href="transaction.php">Transactions</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                                <?php
+  </div>
+  <header>
+    <div class="header-area header-transparrent">
+      <div class="headder-top header-sticky">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-3 col-md-2">
+              <div class="logo">
+                <a href="fl_landing.php"><img src="assets/img/logo/logo.png" alt=""></a>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9">
+              <div class="menu-wrapper">
+                <div class="main-menu">
+                  <nav class="d-none d-lg-block">
+                    <ul id="navigation">
+                      <li><a href="fl_landing.php">Jobs</a></li>
+                      <li><a href="transaction.php">Transactions</a></li>
+                    </ul>
+                  </nav>
+                </div>
+                <?php
 
-                                if (isset($_SESSION['email'])) {
-                                    echo '<a href="profile.php" style="color: black;">Welcome <span style="color: rgb(16, 16, 16);">' . $_SESSION["first_name"] . '</span>!</a>';
-                                    echo '
+                if (isset($_SESSION['email'])) {
+                  echo '<a href="profile.php" style="color: black;">Welcome <span style="color: rgb(16, 16, 16);">' . $_SESSION["first_name"] . '</span>!</a>';
+                  echo '
                                         <form method="post" style="display: inline;">
                                             <button type="submit" name="logout" class="btn head-btn2">Logout</button>
                                         </form>';
-                                } else {
-                                    echo '
+                } else {
+                  echo '
                                         <div class="header-btn d-none f-right d-lg-block">
                                             <a href="register.php" class="btn head-btn1">Register</a>
                                             <a href="login.php" class="btn head-btn2">Login</a>
                                         </div>';
+                }
+                ?>
+  </header>
 
-                                }
-                                ?>
-    </header>
-    
-    <body>
+  <body>
     <main>
-        <section class="transaction-history">
-            <div class="container">
-                <h2>Ongoing Transactions</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Job Name</th>
-                            <th>Client ID</th>
-                            <th>Transaction Start</th>
-                            <th>Transaction End</th>
-                            <th>Job Value</th>
-                            <th>Proof</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        
-                        $user_id = $_SESSION['user_id'];
+      <section class="transaction-history">
+        <div class="container">
+          <h2>Ongoing Transactions</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Job Name</th>
+                <th>Client ID</th>
+                <th>Transaction Start</th>
+                <th>Transaction End</th>
+                <th>Job Value</th>
+                <th>Proof</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
 
-                        $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
+              $user_id = $_SESSION['user_id'];
+
+              $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
                                   FROM transactions t
                                   JOIN user_jobs uj ON t.job_id = uj.job_id
                                   WHERE uj.freelancer_id = '$user_id' AND transaction_end IS NULL;";
-                            
-                            $query_run = mysqli_query($conn, $query);
 
-                            if (mysqli_num_rows($query_run) > 0) {
-                                foreach ($query_run as $row) {
-                                    
-                        ?>
-                        <tr>
-                            <td><?= $row['transaction_id'] ?></td>
-                            <td><?= $row['job_name'] ?></td>
-                            <td><?= $row['client_id']   ?></td>
-                            <td><?= date('Y-m-d', strtotime($row['transaction_start']))?></td>
-                            <td>Ongoing</td>
-                            <td>₱ <?= $row['job_price']?></td>
-                            <td>
-                            <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
-                            <input type="file" id="proof" name="proof" accept="image/*" data-transaction-id="<?= $row['transaction_id'] ?>">
-                            </form>
-                            </td>
-                        </tr>
-                        <?php
-                             }
-                        } else {
-                            echo '<tr><td colspan="7">No ongoing transactions</td></tr>';
-                            echo $user_id;
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+              $query_run = mysqli_query($conn, $query);
 
-            <div class="container">
-                <h2>Finished Transactions</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Job Name</th>
-                            <th>Client ID</th>
-                            <th>Transaction Start</th>
-                            <th>Transaction End</th>
-                            <th>Job Value</th>
-                            <th>Proof</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
+              if (mysqli_num_rows($query_run) > 0) {
+                foreach ($query_run as $row) {
+
+              ?>
+              <tr>
+                <td><?= $row['transaction_id'] ?></td>
+                <td><?= $row['job_name'] ?></td>
+                <td><?= $row['client_id']   ?></td>
+                <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
+                <td>Ongoing</td>
+                <td>₱ <?= $row['job_price'] ?></td>
+                <td>
+                  <form id="hireJob">
+                    <input type="file" id="proof" name="proof" accept="image/*"
+                      data-transaction-id="<?= $row['transaction_id'] ?>">
+                    <button type="submit" class="btn">Upload</button>
+                  </form>
+                </td>
+              </tr>
+              <?php
+                }
+              } else {
+                echo '<tr><td colspan="7">No ongoing transactions</td></tr>';
+                echo $user_id;
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="container">
+          <h2>Finished Transactions</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Job Name</th>
+                <th>Client ID</th>
+                <th>Transaction Start</th>
+                <th>Transaction End</th>
+                <th>Job Value</th>
+                <th>Proof</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
                             FROM transactions t
                             JOIN user_jobs uj ON t.job_id = uj.job_id
                             WHERE uj.freelancer_id = '$user_id' AND transaction_end IS NOT NULL;";
 
-                            $query_run = mysqli_query($conn, $query);
+              $query_run = mysqli_query($conn, $query);
 
-                            if (mysqli_num_rows($query_run) > 0) {
-                                foreach ($query_run as $row) {
-                        ?>
-                        <tr>
-                            <td><?= $row['transaction_id'] ?></td>
-                            <td><?= $row['job_name'] ?></td>
-                            <td><?= $row['client_id']   ?></td>
-                            <td><?= date('Y-m-d', strtotime($row['transaction_start']))?></td>
-                            <td><?= date('Y-m-d', strtotime($row['transaction_end']))?></td>
-                            <td>₱ <?= $row['job_price']?></td>
-                            <td><img src="path/to/proof3.jpg" alt="Proof of Payment" class="proof-img" data-img="path/to/proof3.jpg"></td>
-                        </tr>
-                        <?php
-                             }
-                        } else {
-                            echo '<tr><td colspan="7">No finished transactions</td></tr>';
-                            echo $user_id;
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="total-counter">
-            <div class="container">
-                <div id="total-earnings" class="total-earnings">
-                    <h3>Total Earnings: $0.00</h3>
-                </div>
-            </div>
-        </section>
-
-        <!-- Modal Structure -->
-        <div id="imageModal" class="modal">
-            <span class="close">&times;</span>
-            <img class="modal-content" id="modalImg">
-            <div id="caption"></div>
+              if (mysqli_num_rows($query_run) > 0) {
+                foreach ($query_run as $row) {
+              ?>
+              <tr>
+                <td><?= $row['transaction_id'] ?></td>
+                <td><?= $row['job_name'] ?></td>
+                <td><?= $row['client_id']   ?></td>
+                <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
+                <td><?= date('Y-m-d', strtotime($row['transaction_end'])) ?></td>
+                <td>₱ <?= $row['job_price'] ?></td>
+                <td><img src="path/to/proof3.jpg" alt="Proof of Payment" class="proof-img"
+                    data-img="path/to/proof3.jpg"></td>
+              </tr>
+              <?php
+                }
+              } else {
+                echo '<tr><td colspan="7">No finished transactions</td></tr>';
+                echo $user_id;
+              }
+              ?>
+            </tbody>
+          </table>
         </div>
+      </section>
+
+      <section class="total-counter">
+        <?php
+        $query = "SELECT SUM(uj.job_price) as total_earnings
+              FROM transactions t
+              JOIN user_jobs uj ON t.job_id = uj.job_id
+              WHERE uj.freelancer_id = '$user_id' AND t.transaction_end IS NOT NULL;";
+
+        $query_run = mysqli_query($conn, $query);
+
+        if ($query_run) {
+          $result = mysqli_fetch_assoc($query_run);
+          $total_earnings = $result['total_earnings'];
+        ?>
+        <div class="container">
+          <div id="total-earnings" class="total-earnings">
+            <h3>Total Earnings: ₱<?= $total_earnings ?></h3>
+          </div>
+        </div>
+        <?php
+        } else {
+          echo "No transactions found.";
+        }
+        ?>
+      </section>
+
+
+      <!-- Modal Structure -->
+      <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div id="caption"></div>
+      </div>
     </main>
 
 
@@ -320,27 +343,27 @@ if (!isset($_SESSION['user_id'])) {
     <footer>
 
 
-        <div class="footer-bottom-area footer-bg">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row d-flex justify-content-between align-items-center">
-                        <div class="col-xl-10 col-lg-10 ">
-                            <div class="footer-copy-right">
-                                <p>All rights reserved 2024</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2">
-                            <div class="footer-social f-right">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fas fa-globe"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
-                            </div>
-                        </div>
-                    </div>
+      <div class="footer-bottom-area footer-bg">
+        <div class="container">
+          <div class="footer-border">
+            <div class="row d-flex justify-content-between align-items-center">
+              <div class="col-xl-10 col-lg-10 ">
+                <div class="footer-copy-right">
+                  <p>All rights reserved 2024</p>
                 </div>
+              </div>
+              <div class="col-xl-2 col-lg-2">
+                <div class="footer-social f-right">
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                  <a href="#"><i class="fas fa-globe"></i></a>
+                  <a href="#"><i class="fab fa-behance"></i></a>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </footer>
 
     <!-- All JS Custom Plugins Link Here here -->
@@ -380,98 +403,77 @@ if (!isset($_SESSION['user_id'])) {
     <script scr="script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        calculateTotalEarnings();
-        setupModal();
-    });
-
-    function calculateTotalEarnings() {
-        let total = 0;
-        const jobValues = document.querySelectorAll('.table tbody tr td:nth-child(6)');
-
-        jobValues.forEach(value => {
-            total += parseFloat(value.textContent.replace('$', ''));
-        });
-
-        // Update the total earnings div with the calculated total
-        const totalEarningsDiv = document.getElementById('total-earnings');
-        totalEarningsDiv.innerHTML = `<h3>Total Earnings: $${total.toFixed(2)}</h3>`;
-    }
-
-    function setupModal() {
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImg');
-        const captionText = document.getElementById('caption');
-        const closeBtn = document.querySelector('.close');
-
-        document.querySelectorAll('.proof-img').forEach(img => {
-            img.addEventListener('click', function() {
-                modal.style.display = 'block';
-                modalImg.src = this.dataset.img;
-                captionText.innerHTML = this.alt;
-            });
-        });
-
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        });
-    }
-
     var modal = document.getElementById("imageModal");
 
-// Get the image and insert it inside the modal
-var modalImg = document.getElementById("modalImg");
-var captionText = document.getElementById("caption");
+    // Get the image and insert it inside the modal
+    var modalImg = document.getElementById("modalImg");
+    var captionText = document.getElementById("caption");
 
-document.querySelectorAll('.proof-img').forEach(img => {
-    img.onclick = function () {
+    document.querySelectorAll('.proof-img').forEach(img => {
+      img.onclick = function() {
         modal.style.display = "block";
         modalImg.src = this.src;
         captionText.innerHTML = this.alt;
-    }
-});
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-$(document).ready(function() {
-    $('#proof').change(function() {
-        var formData = new FormData();
-        var files = $('#proof')[0].files;
-        var transactionId = $(this).data('transaction-id'); // Retrieve the transaction ID
-
-        if (files.length > 0) {
-            formData.append('proof', files[0]);
-            formData.append('transaction_id', transactionId); // Append the transaction ID to the FormData
-
-            $.ajax({
-                url: 'controller/upload_proof_controller.php',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    // Parse the JSON response
-                    alert("working");
-                }
-            });
-        }
+      }
     });
-});
 
-</script>
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
-</body>
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    $(document).on('submit', '#hireJob', function(e) {
+      e.preventDefault();
+
+      let formData = new FormData(this);
+      formData.append("hire_job", true);
+
+      // Get the file input
+      let fileInput = document.getElementById('proof');
+      let file = fileInput.files[0];
+
+      // Get the transaction ID from the data attribute
+      let transactionId = fileInput.getAttribute('data-transaction-id');
+
+      // Append the file to the FormData object
+      if (file) {
+        formData.append('proof', file);
+      }
+
+      // Append the transaction ID to the FormData object
+      formData.append('transaction_id', transactionId);
+
+      $.ajax({
+        type: "POST",
+        url: "/freelipino/controller/upload_proof_controller.php",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          let res = jQuery.parseJSON(response);
+          if (res.status == 422) {
+            $('#errorMessage').removeClass('d-none');
+            $('#errorMessage').text(res.message);
+          } else if (res.status == 200) {
+            $('#errorMessage').addClass('d-none');
+            alertify.set('notifier', 'position', 'top-right');
+            alertify.success(res.message);
+
+            $('#container').load(location.href + " #container");
+            $('#table').load(location.href + " #table");
+
+            location.reload(true);
+          } else if (res.status == 500) {
+            alert(res.message);
+          }
+        }
+      });
+    });
+    </script>
+
+  </body>
 
 </html>

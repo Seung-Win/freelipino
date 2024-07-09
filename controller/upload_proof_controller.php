@@ -1,72 +1,92 @@
 <?php
-header('Content-Type: application/json');
 require_once '../config.php';
+session_start();
 
-if (isset($_POST['proof'])) {
-    $transaction_id = mysqli_real_escape_string($conn, $_POST['transaction_id']);
-  
-    // Check if the image file is uploaded successfully
-    if (isset($_FILES["proof"]) && $_FILES["proof"]["error"] === UPLOAD_ERR_OK) {
-      $fileName = $_FILES["proof"]["name"];
-      $fileSize = $_FILES["proof"]["size"];
-      $tmpName = $_FILES["proof"]["tmp_name"];
-  
-      $validImageExtensions = ['jpg', 'jpeg', 'png'];
-      $imageExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-  
-      // Check if the file extension is valid
-      if (!in_array($imageExtension, $validImageExtensions)) {
-        $res = [
-          'status' => 422,
-          'message' => 'Invalid Image Extension'
-        ];
-        echo json_encode($res);
-        exit;
-      }
-  
-      // Check if the file size is within limits
-      if ($fileSize > 10000000000) { // 10GB is a very large file size limit, consider reducing it
-        $res = [
-          'status' => 422,
-          'message' => 'Image Size is too large'
-        ];
-        echo json_encode($res);
-        exit;
-      }
-  
-      // Generate a unique filename
-      $newImageName = uniqid() . '.' . $imageExtension;
-  
-      // Move the uploaded file to the destination directory
-      if (move_uploaded_file($tmpName, '../assets/uploads/' . $newImageName)) {
-  
-        // Prepare the update statement
-        $query = "UPDATE transactions 
-        SET transaction_end=curdate(), fl_proof=? 
-        WHERE transaction_id=?";
-        $statement = mysqli_prepare($conn, $query);
-        
-        // Bind parameters
-        mysqli_stmt_bind_param($statement, "si",$newImageName, $transaction_id);
-  
-        // Execute the statement
-        $query_run = mysqli_stmt_execute($statement);
-        if ($query_run) {
-        $res = [
-        'status' => 200,
-        'message' => 'Transaction Updated Successfully'
-        ];
-        echo json_encode($res);
-        return;
-        } else {
-        $res = [
-        'status' => 500,
-        'message' => 'Transaction Not Updated'
-        ];
-        echo json_encode($res);
-        return;
-        }
-      } 
+if (isset($_POST['hire_job'])) {
+  $transaction_id = mysqli_real_escape_string($conn, $_POST['transaction_id']);
+
+  // Check if the image file is uploaded successfully
+  if (isset($_FILES["proof"]) && $_FILES["proof"]["error"] === UPLOAD_ERR_OK) {
+    $fileName = $_FILES["proof"]["name"];
+    $fileSize = $_FILES["proof"]["size"];
+    $tmpName = $_FILES["proof"]["tmp_name"];
+
+    $validImageExtensions = ['jpg', 'jpeg', 'png'];
+    $imageExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+    // Check if the file extension is valid
+    if (!in_array($imageExtension, $validImageExtensions)) {
+      $res = [
+        'status' => 422,
+        'message' => 'Invalid Image Extension'
+      ];
+      echo json_encode($res);
+      exit;
     }
+
+    // Check if the file size is within limits
+    if ($fileSize > 10000000) { // Adjusted to 10MB limit
+      $res = [
+        'status' => 422,
+        'message' => 'Image Size is too large'
+      ];
+      echo json_encode($res);
+      exit;
+    }
+
+    // Generate a unique filename
+    $newImageName = uniqid() . '.' . $imageExtension;
+
+    // Move the uploaded file to the destination directory
+    if (move_uploaded_file($tmpName, '../assets/uploads/' . $newImageName)) {
+      // Update the transaction details in the database
+      $query_run = "UPDATE transactions 
+                              SET transaction_end = CURDATE(), fl_proof = ? 
+                              WHERE transaction_id = ?";
+      $statement_run = mysqli_prepare($conn, $query_run);
+      mysqli_stmt_bind_param($statement_run, "si", $newImageName, $transaction_id);
+
+
+      if (mysqli_stmt_execute($statement_run)) {
+        echo $transaction_id;
+        $res = [
+          'status' => 200,
+          'message' => 'Thank you for adding proof of job completion'
+        ];
+        echo json_encode($res);
+        exit;
+      } else {
+        $res = [
+          'status' => 500,
+          'message' => 'Error in updating transaction: ' . mysqli_error($conn)
+        ];
+        echo json_encode($res);
+        exit;
+      }
+    } else {
+      // Failed to move the uploaded file
+      $res = [
+        'status' => 500,
+        'message' => 'Failed to move the uploaded file'
+      ];
+      echo json_encode($res);
+      exit;
+    }
+  } else {
+    // Image file upload failed
+    $res = [
+      'status' => 422,
+      'message' => 'Image upload failed'
+    ];
+    echo json_encode($res);
+    exit;
   }
-?>
+} else {
+  echo 'Hekki';
+  $res = [
+    'status' => 400,
+    'message' => 'Invalid request'
+  ];
+  echo json_encode($res);
+  exit;
+}
