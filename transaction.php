@@ -272,7 +272,7 @@ if (isset($_POST['logout'])) {
             </thead>
             <tbody>
               <?php
-              $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
+              $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.job_photo, uj.freelancer_id, uj.job_price
                             FROM transactions t
                             JOIN user_jobs uj ON t.job_id = uj.job_id
                             WHERE uj.freelancer_id = '$user_id' AND transaction_end IS NOT NULL;";
@@ -289,8 +289,8 @@ if (isset($_POST['logout'])) {
                 <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
                 <td><?= date('Y-m-d', strtotime($row['transaction_end'])) ?></td>
                 <td>₱ <?= $row['job_price'] ?></td>
-                <td><img src="path/to/proof3.jpg" alt="Proof of Payment" class="proof-img"
-                    data-img="path/to/proof3.jpg"></td>
+                <td><a href=<?= ($row['fl_proof'] != NULL) ? "assets/uploads/" . $row['fl_proof'] : "" ?>>Transaction Proof</a>
+                
               </tr>
               <?php
                 }
@@ -325,7 +325,7 @@ if (isset($_POST['logout'])) {
         <?php
         } else {
           echo "No transactions found.";
-        }
+        } $conn->close();
         ?>
       </section>
 
@@ -452,23 +452,8 @@ if (isset($_POST['logout'])) {
         data: formData,
         processData: false,
         contentType: false,
-        success: function(response) {
-          let res = jQuery.parseJSON(response);
-          if (res.status == 422) {
-            $('#errorMessage').removeClass('d-none');
-            $('#errorMessage').text(res.message);
-          } else if (res.status == 200) {
-            $('#errorMessage').addClass('d-none');
-            alertify.set('notifier', 'position', 'top-right');
-            alertify.success(res.message);
-
-            $('#container').load(location.href + " #container");
-            $('#table').load(location.href + " #table");
-
-            location.reload(true);
-          } else if (res.status == 500) {
-            alert(res.message);
-          }
+        success: function(data) {
+          location.reload()
         }
       });
     });

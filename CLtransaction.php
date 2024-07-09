@@ -253,9 +253,15 @@ if (!isset($_SESSION['user_id'])) {
                             <td><?= $row['job_name'] ?></td>
                             <td><?= $row['freelancer_id']   ?></td>
                             <td><?= date('Y-m-d', strtotime($row['transaction_start']))?></td>
-                            <td><?= date('Y-m-d', strtotime($row['transaction_end']))?></td>
+                            <td>Ongoing</td>
                             <td>₱ <?= $row['job_price']?></td>
-                            <td><img src="path/to/proof3.jpg" alt="Proof of Payment" class="proof-img" data-img="path/to/proof3.jpg"></td>
+                            <td>
+                                <form id="hireJobClient">
+                                    <input type="file" id="proof" name="proof" accept="image/*"
+                                    data-transaction-id="<?= $row['transaction_id'] ?>">
+                                    <button type="submit" class="btn">Upload</button>
+                                </form>
+                            </td>
                         </tr>
                         </tr>
                 <?php

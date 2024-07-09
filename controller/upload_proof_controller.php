@@ -1,6 +1,7 @@
 <?php
 require_once '../config.php';
 session_start();
+date_default_timezone_set('Asia/Manila');
 
 if (isset($_POST['hire_job'])) {
   $transaction_id = mysqli_real_escape_string($conn, $_POST['transaction_id']);
@@ -41,7 +42,7 @@ if (isset($_POST['hire_job'])) {
     if (move_uploaded_file($tmpName, '../assets/uploads/' . $newImageName)) {
       // Update the transaction details in the database
       $query_run = "UPDATE transactions 
-                              SET transaction_end = CURDATE(), fl_proof = ? 
+                              SET transaction_end = NOW(), fl_proof = ? 
                               WHERE transaction_id = ?";
       $statement_run = mysqli_prepare($conn, $query_run);
       mysqli_stmt_bind_param($statement_run, "si", $newImageName, $transaction_id);
