@@ -135,6 +135,8 @@ echo "<li><a class='page-link " . ($page_no >= $total_no_of_pages ? 'disabled' :
 
 echo "</ul>";
 echo "</nav>";
+
+$conn->close();
 ?>
 
 

@@ -19,7 +19,10 @@ $row_count = $result_count->fetch_assoc();
 $total_count = $total_count = $row_count['total'];
 if(isset($_GET['page_no'])){
     $_SESSION['page_no'] = $page_no=$_GET['page_no'];
+} else{
+    $_SESSION['page_no'] = $page_no=1;
 }
+$conn->close();
 ?>
 
 <!doctype html>
@@ -260,9 +263,7 @@ button:hover {
                   <nav class="d-none d-lg-block">
                     <ul id="navigation">
                       <li><a href="finding.php">Find Freelancer</a></li>
-                      <li><a href="profile.php">Profile</a></li>
-                      <li><a href="about.html">About</a></li>
-                      <li><a href="contact.html">Contact</a></li>
+                      <li><a href="CLtransaction.php">Transactions</a></li>
                     </ul>
                   </nav>
                 </div>

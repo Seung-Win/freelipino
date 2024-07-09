@@ -269,3 +269,5 @@ if (isset($_POST['delete_job'])) {
   echo json_encode($res);
 }
 
+$conn->close();
+?>

@@ -34,7 +34,7 @@ $previous_page = $page_no - 1;
 $next_page = $page_no + 1;
     
       // Get the total count of records
-      $result_count = mysqli_query($conn, "SELECT COUNT(*) as total_records FROM user_jobs") or die(mysqli_error($conn));
+      $result_count = mysqli_query($conn, "SELECT COUNT(*) as total_records FROM user_jobs WHERE freelancer_id = '". $_SESSION['user_id']."'") or die(mysqli_error($conn));
     
       // Total records
       $records = mysqli_fetch_array($result_count);

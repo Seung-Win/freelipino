@@ -12,35 +12,45 @@ if (isset($_POST['logout'])) {
     exit;
 }
 
-require_once 'config.php';
+if (!isset($_GET['page_no'])) {
+    $page_no = 1;
+  } else {
+    $page_no = $_GET['page_no'];
+  }
 
-$results_per_page = 6; 
-if (!isset($_GET['page'])) {
-    $page = 1;
-} else {
-    $page = $_GET['page'];
-}
+  require 'config.php';
 
-$start_from = ($page - 1) * $results_per_page;
-
-$sql = "SELECT * FROM user_jobs";
-$result = $conn->query($sql);
-
-$user_jobs = [];
-if ($result->num_rows > 0) {
-
-    while ($row = $result->fetch_assoc()) {
-        $job_listings[] = $row;
-    }
-} else {
-    echo "0 results";
-}
-
-
-$sql_count = "SELECT COUNT(*) AS total FROM user_jobs";
-$result_count = $conn->query($sql_count);
-$row_count = $result_count->fetch_assoc();
-$total_pages = ceil($row_count['total'] / $results_per_page);
+// Total rows or records to display
+$total_records_per_page = 9;
+    
+// Get the page offset for the LIMIT query
+$offset = ($page_no - 1) * $total_records_per_page;
+    
+// Get previous page
+$previous_page = $page_no - 1;
+    
+// Get the next page
+$next_page = $page_no + 1;
+    
+      // Get the total count of records
+      $result_count = mysqli_query($conn, "SELECT COUNT(*) as total_records FROM user_jobs") or die(mysqli_error($conn));
+    
+      // Total records
+      $records = mysqli_fetch_array($result_count);
+    
+      // Store total_records to a variable
+      $total_records = $records['total_records'];
+    
+      // Get total pages
+      $total_no_of_pages = ceil($total_records / $total_records_per_page);
+    
+      // Query string if and elseif
+      $sql = "SELECT * FROM user_jobs";
+    
+      $sql .= " LIMIT $offset , $total_records_per_page";
+    
+      // Result
+      $result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
 
 $sql1 = "SELECT COUNT(*) AS total FROM user_jobs WHERE job_category='Technology'";
@@ -48,7 +58,7 @@ $result1 = $conn->query($sql1);
 $row1 = $result1->fetch_assoc();
 $technology = $row1['total'];
 
-$sql2 = "SELECT COUNT(*) AS total FROM user_jobs WHERE job_category='Art'";
+$sql2 = "SELECT COUNT(*) AS total FROM user_jobs WHERE job_category='Arts'";
 $result2 = $conn->query($sql2);
 $row2 = $result2->fetch_assoc();
 $art = $row2['total'];
@@ -221,7 +231,7 @@ $conn->close();
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="cl_landing.php"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -313,7 +323,7 @@ $conn->close();
                     <div class="col-xl-10">
                         <!-- single-job-content -->
                         <div class="job-listings">
-                            <?php foreach ($job_listings as $job) : ?>
+                            <?php foreach ($result as $job) : ?>
                                 <div class="single-job-items mb-30">
                                     <div class="job-items">
                                         <div class="company-img">
@@ -329,17 +339,6 @@ $conn->close();
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                        </div>
-                        <div class="pagination-area mt-50">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <?php
-                                    for ($i = 1; $i <= $total_pages; $i++) {
-                                        echo "<li class='page-item'><a class='page-link' href='index.php?page=$i'>$i</a></li>";
-                                    }
-                                    ?>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>

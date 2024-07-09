@@ -1,3 +1,24 @@
+<?php
+  session_start();
+  require_once 'config.php';
+
+if (!isset($_SESSION['user_id'])) {
+    session_destroy();
+    header('Location: index.html');
+    exit;
+}
+  if (isset($_POST['logout'])) {
+    session_destroy();
+    header('Location: index.html');
+    exit;
+}
+
+$sql_count = "SELECT COUNT(*) AS total FROM transactions WHERE client_id=" . $_SESSION['user_id'] . " AND job_id=" . $_GET['id'] . " AND transaction_end IS NULL";
+$result_count = $conn->query($sql_count);
+$row_count = $result_count->fetch_assoc();
+$total_count = $row_count['total'];
+?>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
     <head>
@@ -65,7 +86,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="finding.html"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -73,10 +94,8 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="job_listing.html">Find a Jobs </a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="#">Page</a>
+                                        <li><a href="finding.php">Jobs</a></li>
+                                        <li><a href="CLtransaction.php">Transactions</a></li>
                                                 
                                             </li>
                                         </ul>
@@ -119,7 +138,6 @@
                   
 
                         <?php
-                            require 'config.php';
 
                             if (isset($_GET['id'])) {
                                 $job_id = $_GET['id'];
@@ -133,7 +151,7 @@
                                 if ($result->num_rows > 0) {
                                     
                                     $row = $result->fetch_assoc();
-
+                                    $conn->close();
                         ?>
                         <div class="single-job-items mb-50">
                             <div class="job-items">
@@ -189,14 +207,15 @@
                           </ul>
 
                           <div class="small-section-tittle">
+                        <form id="hireForm">
                       <label for="jobDescription">Comment</label>
                         <textarea class="form-control" id="jobDescription" name="jobDescription" rows="3" required></textarea>
                         </div>
                          <div class="apply-btn2">
-                            <form id="hireForm">
-                                <a href="---" class="btn">Hire</a>
-                                <button type="submit" class="btn">Hire</button>
-                            </form>
+                            <button type="submit" class="btn" <?= ($total_count > 0) ? 'disabled' : '' ?>>
+                                <?= ($total_count > 0) ? 'Hired' : 'Hire' ?>
+                            </button>
+                        </form>
                          </div>
                        </div>
                         <div class="post-details4  mb-50">
@@ -387,12 +406,14 @@
 
 
         <script>
+            var jobId = <?php echo json_encode($job_id); ?>;
             $(document).on('submit', '#hireForm', function(e) {
 
                 e.preventDefault();
 
                 let formData = new FormData(this);
                 formData.append("save_freelancer", true);
+                formData.append("job_id", jobId);
 
                 $.ajax ({
 
@@ -402,26 +423,7 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-
-                    let res = jQuery.parseJSON(response);
-                    if (res.status == 422) {
-                    $('#errorMessage').removeClass('d-none');
-                    $('#errorMessage').text(res.message);
-
-                    } else if (res.status == 200) {
-
-                    $('#errorMessage').addClass('d-none');
-                    $('#createJobModal').modal('hide');
-                    $('#createJobForm')[0].reset();
-
-                    alertify.set('notifier', 'position', 'top-right');
-                    alertify.success(res.message);
-
-                    $('#job_container').load(location.href + " #job_container");
-
-                    } else if (res.status == 500) {
-                    alert(res.message);
-                    }
+                        location.reload();
                     }
                 })
             })

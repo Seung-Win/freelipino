@@ -211,6 +211,7 @@ if (isset($_POST['logout'])) {
                 <th>Transaction Start</th>
                 <th>Transaction End</th>
                 <th>Job Value</th>
+                <th>Comments</th>
                 <th>Proof</th>
               </tr>
             </thead>
@@ -219,7 +220,7 @@ if (isset($_POST['logout'])) {
 
               $user_id = $_SESSION['user_id'];
 
-              $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
+              $query = "SELECT t.transaction_id, t.client_id, t.transaction_start, t.transaction_end, t.cl_comment,t.fl_proof, uj.job_name, uj.freelancer_id, uj.job_price
                                   FROM transactions t
                                   JOIN user_jobs uj ON t.job_id = uj.job_id
                                   WHERE uj.freelancer_id = '$user_id' AND transaction_end IS NULL;";
@@ -237,6 +238,7 @@ if (isset($_POST['logout'])) {
                 <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
                 <td>Ongoing</td>
                 <td>₱ <?= $row['job_price'] ?></td>
+                <td><?= $row['cl_comment']   ?></td>
                 <td>
                   <form id="hireJob">
                     <input type="file" id="proof" name="proof" accept="image/*"
@@ -249,7 +251,6 @@ if (isset($_POST['logout'])) {
                 }
               } else {
                 echo '<tr><td colspan="7">No ongoing transactions</td></tr>';
-                echo $user_id;
               }
               ?>
             </tbody>
@@ -289,14 +290,13 @@ if (isset($_POST['logout'])) {
                 <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
                 <td><?= date('Y-m-d', strtotime($row['transaction_end'])) ?></td>
                 <td>₱ <?= $row['job_price'] ?></td>
-                <td><a href=<?= ($row['fl_proof'] != NULL) ? "assets/uploads/" . $row['fl_proof'] : "" ?>>Transaction Proof</a>
+                <td><a href="<?= ($row['fl_proof'] != NULL) ? "assets/uploads/" . $row['fl_proof'] : "" ?>" style="color: blue;">Transaction Proof</a></td>
                 
               </tr>
               <?php
                 }
               } else {
                 echo '<tr><td colspan="7">No finished transactions</td></tr>';
-                echo $user_id;
               }
               ?>
             </tbody>

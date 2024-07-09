@@ -49,7 +49,6 @@ if (isset($_POST['hire_job'])) {
 
 
       if (mysqli_stmt_execute($statement_run)) {
-        echo $transaction_id;
         $res = [
           'status' => 200,
           'message' => 'Thank you for adding proof of job completion'
@@ -83,11 +82,12 @@ if (isset($_POST['hire_job'])) {
     exit;
   }
 } else {
-  echo 'Hekki';
   $res = [
     'status' => 400,
     'message' => 'Invalid request'
   ];
   echo json_encode($res);
   exit;
+  $conn->close();
 }
+?>
