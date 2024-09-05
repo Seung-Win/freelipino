@@ -22,6 +22,7 @@ if (!isset($_GET['page_no'])) {
 require 'config.php';
 
 // Total rows or records to display
+
 $total_records_per_pagesss = 3;
 
 // Get the page offset for the LIMIT query
