@@ -20,7 +20,7 @@ if (isset($_POST['logout'])) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Freelipino</title>
+  <title>Freelipinosssss</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/logo.png">
@@ -39,110 +39,110 @@ if (isset($_POST['logout'])) {
   <link rel="stylesheet" href="assets/css/style.css">
 
   <style>
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .logo img {
-    max-width: 100%;
-    height: auto;
-  }
+    .logo img {
+      max-width: 100%;
+      height: auto;
+    }
 
-  main {
-    padding: 60px 0;
-    /* Adjust padding as needed */
-  }
+    main {
+      padding: 60px 0;
+      /* Adjust padding as needed */
+    }
 
-  .transaction-history {
-    margin-bottom: 40px;
-    /* Space between sections */
-  }
+    .transaction-history {
+      margin-bottom: 40px;
+      /* Space between sections */
+    }
 
-  .transaction-history table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+    .transaction-history table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
 
-  .transaction-history th,
-  .transaction-history td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
+    .transaction-history th,
+    .transaction-history td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
 
-  .transaction-history th {
-    background-color: #f2f2f2;
-  }
+    .transaction-history th {
+      background-color: #f2f2f2;
+    }
 
-  .proof-img {
-    max-width: 50px;
-    cursor: pointer;
-  }
+    .proof-img {
+      max-width: 50px;
+      cursor: pointer;
+    }
 
-  .total-counter {
-    margin-top: 40px;
-  }
+    .total-counter {
+      margin-top: 40px;
+    }
 
-  .total-earnings {
-    text-align: center;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+    .total-earnings {
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
 
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 60px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.9);
-  }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgb(0, 0, 0);
+      background-color: rgba(0, 0, 0, 0.9);
+    }
 
-  .modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-  }
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
 
-  .close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-  }
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-  .close:hover,
-  .close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
-  }
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-  #caption {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    text-align: center;
-    color: #ccc;
-    padding: 10px 0;
-    height: 150px;
-  }
+    #caption {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      text-align: center;
+      color: #ccc;
+      padding: 10px 0;
+      height: 150px;
+    }
   </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -231,22 +231,22 @@ if (isset($_POST['logout'])) {
                 foreach ($query_run as $row) {
 
               ?>
-              <tr>
-                <td><?= $row['transaction_id'] ?></td>
-                <td><?= $row['job_name'] ?></td>
-                <td><?= $row['client_id']   ?></td>
-                <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
-                <td>Ongoing</td>
-                <td>₱ <?= $row['job_price'] ?></td>
-                <td><?= $row['cl_comment']   ?></td>
-                <td>
-                  <form id="hireJob">
-                    <input type="file" id="proof" name="proof" accept="image/*"
-                      data-transaction-id="<?= $row['transaction_id'] ?>">
-                    <button type="submit" class="btn">Upload</button>
-                  </form>
-                </td>
-              </tr>
+                  <tr>
+                    <td><?= $row['transaction_id'] ?></td>
+                    <td><?= $row['job_name'] ?></td>
+                    <td><?= $row['client_id']   ?></td>
+                    <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
+                    <td>Ongoing</td>
+                    <td>₱ <?= $row['job_price'] ?></td>
+                    <td><?= $row['cl_comment']   ?></td>
+                    <td>
+                      <form id="hireJob">
+                        <input type="file" id="proof" name="proof" accept="image/*"
+                          data-transaction-id="<?= $row['transaction_id'] ?>">
+                        <button type="submit" class="btn">Upload</button>
+                      </form>
+                    </td>
+                  </tr>
               <?php
                 }
               } else {
@@ -283,16 +283,17 @@ if (isset($_POST['logout'])) {
               if (mysqli_num_rows($query_run) > 0) {
                 foreach ($query_run as $row) {
               ?>
-              <tr>
-                <td><?= $row['transaction_id'] ?></td>
-                <td><?= $row['job_name'] ?></td>
-                <td><?= $row['client_id']   ?></td>
-                <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
-                <td><?= date('Y-m-d', strtotime($row['transaction_end'])) ?></td>
-                <td>₱ <?= $row['job_price'] ?></td>
-                <td><a href="<?= ($row['fl_proof'] != NULL) ? "assets/uploads/" . $row['fl_proof'] : "" ?>" style="color: blue;">Transaction Proof</a></td>
-                
-              </tr>
+                  <tr>
+                    <td><?= $row['transaction_id'] ?></td>
+                    <td><?= $row['job_name'] ?></td>
+                    <td><?= $row['client_id']   ?></td>
+                    <td><?= date('Y-m-d', strtotime($row['transaction_start'])) ?></td>
+                    <td><?= date('Y-m-d', strtotime($row['transaction_end'])) ?></td>
+                    <td>₱ <?= $row['job_price'] ?></td>
+                    <td><a href="<?= ($row['fl_proof'] != NULL) ? "assets/uploads/" . $row['fl_proof'] : "" ?>"
+                        style="color: blue;">Transaction Proof</a></td>
+
+                  </tr>
               <?php
                 }
               } else {
@@ -317,15 +318,16 @@ if (isset($_POST['logout'])) {
           $result = mysqli_fetch_assoc($query_run);
           $total_earnings = $result['total_earnings'];
         ?>
-        <div class="container">
-          <div id="total-earnings" class="total-earnings">
-            <h3>Total Earnings: ₱<?= $total_earnings ?></h3>
+          <div class="container">
+            <div id="total-earnings" class="total-earnings">
+              <h3>Total Earnings: ₱<?= $total_earnings ?></h3>
+            </div>
           </div>
-        </div>
         <?php
         } else {
           echo "No transactions found.";
-        } $conn->close();
+        }
+        $conn->close();
         ?>
       </section>
 
@@ -403,60 +405,60 @@ if (isset($_POST['logout'])) {
     <script scr="script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-    var modal = document.getElementById("imageModal");
+      var modal = document.getElementById("imageModal");
 
-    // Get the image and insert it inside the modal
-    var modalImg = document.getElementById("modalImg");
-    var captionText = document.getElementById("caption");
+      // Get the image and insert it inside the modal
+      var modalImg = document.getElementById("modalImg");
+      var captionText = document.getElementById("caption");
 
-    document.querySelectorAll('.proof-img').forEach(img => {
-      img.onclick = function() {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-        captionText.innerHTML = this.alt;
-      }
-    });
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-
-    $(document).on('submit', '#hireJob', function(e) {
-      e.preventDefault();
-
-      let formData = new FormData(this);
-      formData.append("hire_job", true);
-
-      // Get the file input
-      let fileInput = document.getElementById('proof');
-      let file = fileInput.files[0];
-
-      // Get the transaction ID from the data attribute
-      let transactionId = fileInput.getAttribute('data-transaction-id');
-
-      // Append the file to the FormData object
-      if (file) {
-        formData.append('proof', file);
-      }
-
-      // Append the transaction ID to the FormData object
-      formData.append('transaction_id', transactionId);
-
-      $.ajax({
-        type: "POST",
-        url: "/freelipino/controller/upload_proof_controller.php",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-          location.reload()
+      document.querySelectorAll('.proof-img').forEach(img => {
+        img.onclick = function() {
+          modal.style.display = "block";
+          modalImg.src = this.src;
+          captionText.innerHTML = this.alt;
         }
       });
-    });
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+
+      $(document).on('submit', '#hireJob', function(e) {
+        e.preventDefault();
+
+        let formData = new FormData(this);
+        formData.append("hire_job", true);
+
+        // Get the file input
+        let fileInput = document.getElementById('proof');
+        let file = fileInput.files[0];
+
+        // Get the transaction ID from the data attribute
+        let transactionId = fileInput.getAttribute('data-transaction-id');
+
+        // Append the file to the FormData object
+        if (file) {
+          formData.append('proof', file);
+        }
+
+        // Append the transaction ID to the FormData object
+        formData.append('transaction_id', transactionId);
+
+        $.ajax({
+          type: "POST",
+          url: "/freelipino/controller/upload_proof_controller.php",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(data) {
+            location.reload()
+          }
+        });
+      });
     </script>
 
   </body>
