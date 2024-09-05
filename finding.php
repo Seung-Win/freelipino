@@ -3,24 +3,24 @@ session_start();
 require 'config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    session_destroy();
-    header('Location: index.html');
-    exit;
+  session_destroy();
+  header('Location: index.html');
+  exit;
 }
 if (isset($_POST['logout'])) {
-    session_destroy();
-    header('Location: index.html');
-    exit;
+  session_destroy();
+  header('Location: index.html');
+  exit;
 }
 
 $sql_count = "SELECT COUNT(*) AS total FROM user_jobs";
 $result_count = $conn->query($sql_count);
-$row_count = $result_count->fetch_assoc();
+$row_counts = $result_count->fetch_assoc();
 $total_count = $total_count = $row_count['total'];
-if(isset($_GET['page_no'])){
-    $_SESSION['page_no'] = $page_no=$_GET['page_no'];
-} else{
-    $_SESSION['page_no'] = $page_no=1;
+if (isset($_GET['page_no'])) {
+  $_SESSION['page_no'] = $page_no = $_GET['page_no'];
+} else {
+  $_SESSION['page_no'] = $page_no = 1;
 }
 $conn->close();
 ?>
@@ -54,186 +54,185 @@ $conn->close();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Button styles */
-button {
-  background-color: white;
-  border: 1px solid #3A4688;
-  color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 20px 2px;
-  cursor: pointer;
-  border-radius: 12px;
-  transition-duration: 0.4s;
-}
-
-button:hover {
-  background-color: #3A4688;
-  color: white;
-}
-
-/* Modal styles */
-.modal {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 1;
-  /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: auto;
-  /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black with opacity */
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  /* Center modal horizontally and vertically */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  /* Adjust width as needed */
-  max-width: 600px;
-  /* Max width for responsiveness */
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.close {
-  color: #aaa;
-  position: absolute;
-  top: 0;
-  right: 10px;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-}
-
-/* Styles for the job item container */
-.single-job-items {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  height: 150px;
-  /* Set a fixed height */
-}
-
-/* Styles for the company image */
-.company-img img {
-  max-width: 100px;
-  max-height: 100px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-/* Styles for the job title container */
-.job-tittle {
-  flex-grow: 1;
-  margin-left: 20px;
-}
-
-.job-tittle a h4 {
-  font-size: 20px;
-  margin: 0 0 10px 0;
-}
-
-/* Styles for the job details */
-.job-tittle ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  align-items: center;
-}
-
-.job-tittle ul li {
-  margin-right: 20px;
-  font-size: 16px;
-}
-
-/* Styles for the job link */
-.items-link {
-  margin-left: auto;
-}
-
-.items-link a {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.items-link a:hover {
-  background-color: #0056b3;
-}
-
-.row {
+  .logo {
     display: flex;
     justify-content: center;
-}
+    align-items: center;
+  }
 
-.search-box {
+  .logo img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Button styles */
+  button {
+    background-color: white;
+    border: 1px solid #3A4688;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition-duration: 0.4s;
+  }
+
+  button:hover {
+    background-color: #3A4688;
+    color: white;
+  }
+
+  /* Modal styles */
+  .modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black with opacity */
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    /* Center modal horizontally and vertically */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Adjust width as needed */
+    max-width: 600px;
+    /* Max width for responsiveness */
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .close {
+    color: #aaa;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+  }
+
+  /* Styles for the job item container */
+  .single-job-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    height: 150px;
+    /* Set a fixed height */
+  }
+
+  /* Styles for the company image */
+  .company-img img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  /* Styles for the job title container */
+  .job-tittle {
+    flex-grow: 1;
+    margin-left: 20px;
+  }
+
+  .job-tittle a h4 {
+    font-size: 20px;
+    margin: 0 0 10px 0;
+  }
+
+  /* Styles for the job details */
+  .job-tittle ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .job-tittle ul li {
+    margin-right: 20px;
+    font-size: 16px;
+  }
+
+  /* Styles for the job link */
+  .items-link {
+    margin-left: auto;
+  }
+
+  .items-link a {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+
+  .items-link a:hover {
+    background-color: #0056b3;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-box {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-}
+  }
 
-.input-form input {
+  .input-form input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
     max-width: 500px;
-}
+  }
 
-.search-form a {
+  .search-form a {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
     text-decoration: none;
     border-radius: 4px;
     margin-left: 20px;
-}
+  }
 
-.search-form a:hover {
+  .search-form a:hover {
     background-color: #0056b3;
-}
-
+  }
 </style>
 
 <body>
@@ -269,20 +268,20 @@ button:hover {
                 </div>
                 <?php
 
-                                if (isset($_SESSION['email'])) {
-                                    echo 'Welcome ' . ($_SESSION["first_name"]) . ' !';
-                                    echo '
+                if (isset($_SESSION['email'])) {
+                  echo 'Welcome ' . ($_SESSION["first_name"]) . ' !';
+                  echo '
                                         <form method="post" style="display: inline;">
                                             <button type="submit" name="logout" class="btn head-btn2">Logout</button>
                                         </form>';
-                                } else {
-                                    echo '
+                } else {
+                  echo '
                                         <div class="header-btn d-none f-right d-lg-block">
                                             <a href="register.php" class="btn head-btn1">Register</a>
                                             <a href="login.php" class="btn head-btn2">Login</a>
                                         </div>';
-                                }
-                                ?>
+                }
+                ?>
 
 
               </div>
@@ -311,24 +310,24 @@ button:hover {
                 <p></p>
               </div>
               <div class="row">
-                            <div class="col-xl-8">
-                                <form action="#" class="search-box">
-                                    <div class="input-form">
-                                        <input type="text" placeholder="Job Title or keyword" id="searchInput" >
-                                    </div>
-                                    <div class="search-form">
-                                        <a href="#">Search</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                <div class="col-xl-8">
+                  <form action="#" class="search-box">
+                    <div class="input-form">
+                      <input type="text" placeholder="Job Title or keyword" id="searchInput">
+                    </div>
+                    <div class="search-form">
+                      <a href="#">Search</a>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-           
+
           </div>
         </div>
       </div>
 
-      
+
     </div>
     <!-- Hero Area End -->
     <!-- Job List Area Start -->
@@ -350,7 +349,7 @@ button:hover {
                 </div>
 
                 <div id="myModal" class="modal">
-             
+
                 </div>
               </div>
             </div>
@@ -410,7 +409,7 @@ button:hover {
                 </div>
               </div>
               <div class="single-listing">
-               
+
               </div>
             </div>
           </div>
@@ -423,15 +422,15 @@ button:hover {
                       <span><?php echo $total_count; ?> Jobs found</span>
                       <div class="select-job-items">
                         <span>Sort by</span>
-                            <form method="post" id="sortJobsForm">
-                              <select id="sortSelect" name="select">
-                                    <option value="">None</option>
-                                    <option value="name">Name</option>
-                                    <option value="pay">Pay</option>
-                                    <option value="duration">Duration</option>
-                                </select>
-                                <input type="hidden" name="formId" value="sortJobs">
-                            </form>
+                        <form method="post" id="sortJobsForm">
+                          <select id="sortSelect" name="select">
+                            <option value="">None</option>
+                            <option value="name">Name</option>
+                            <option value="pay">Pay</option>
+                            <option value="duration">Duration</option>
+                          </select>
+                          <input type="hidden" name="formId" value="sortJobs">
+                        </form>
                       </div>
                       <!--  Select job items End-->
                     </div>
@@ -468,80 +467,80 @@ button:hover {
             </div>
           </div>
 
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-            <div class="single-footer-caption mb-50">
-              <div class="footer-tittle">
-                <h4>Important Link</h4>
-                <ul>
-                  <li><a href="#"> View Project</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">Testimonial</a></li>
-                  <li><a href="#">Properties</a></li>
-                  <li><a href="#">Support</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-            <div class="single-footer-caption mb-50">
-              <div class="footer-tittle">
-                <h4>Newsletter</h4>
-                <div class="footer-pera footer-pera2">
-                  <p>Subscribe to our newsletter to be updated to our latest developments.</p>
-                </div>
-                <!-- Form -->
-                <div class="footer-form">
-                  <div id="mc_embed_signup">
-                    <form target="_blank"
-                      action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                      method="get" class="subscribe_form relative mail_part">
-                      <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
-                        class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
-                        onblur="this.placeholder = ' Email Address '">
-                      <div class="form-icon">
-                        <button type="submit" name="submit" id="newsletter-submit"
-                          class="email_icon newsletter-submit button-contactForm"><img src="assets/img/icon/form.png"
-                            alt=""></button>
-                      </div>
-                      <div class="mt-10 info"></div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+        <div class="single-footer-caption mb-50">
+          <div class="footer-tittle">
+            <h4>Important Link</h4>
+            <ul>
+              <li><a href="#"> View Project</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Testimonial</a></li>
+              <li><a href="#">Properties</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
           </div>
         </div>
-        <!--  -->
-        <div class="row footer-wejed justify-content-between">
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-            <!-- logo -->
-            <div class="footer-logo mb-20">
-              <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+        <div class="single-footer-caption mb-50">
+          <div class="footer-tittle">
+            <h4>Newsletter</h4>
+            <div class="footer-pera footer-pera2">
+              <p>Subscribe to our newsletter to be updated to our latest developments.</p>
             </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-            <div class="footer-tittle-bottom">
-              <span>5000+</span>
-              <p>Talented Hunter</p>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-            <div class="footer-tittle-bottom">
-              <span>451</span>
-              <p>Talented Hunter</p>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-            <!-- Footer Bottom Tittle -->
-            <div class="footer-tittle-bottom">
-              <span>568</span>
-              <p>Talented Hunter</p>
+            <!-- Form -->
+            <div class="footer-form">
+              <div id="mc_embed_signup">
+                <form target="_blank"
+                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                  method="get" class="subscribe_form relative mail_part">
+                  <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
+                    class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
+                    onblur="this.placeholder = ' Email Address '">
+                  <div class="form-icon">
+                    <button type="submit" name="submit" id="newsletter-submit"
+                      class="email_icon newsletter-submit button-contactForm"><img src="assets/img/icon/form.png"
+                        alt=""></button>
+                  </div>
+                  <div class="mt-10 info"></div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <!--  -->
+    <div class="row footer-wejed justify-content-between">
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+        <!-- logo -->
+        <div class="footer-logo mb-20">
+          <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+        <div class="footer-tittle-bottom">
+          <span>5000+</span>
+          <p>Talented Hunter</p>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+        <div class="footer-tittle-bottom">
+          <span>451</span>
+          <p>Talented Hunter</p>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+        <!-- Footer Bottom Tittle -->
+        <div class="footer-tittle-bottom">
+          <span>568</span>
+          <p>Talented Hunter</p>
+        </div>
+      </div>
+    </div>
+    </div>
     </div>
     <!-- footer-bottom area -->
     <div class="footer-bottom-area footer-bg">
@@ -553,7 +552,7 @@ button:hover {
                 <p>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                   Copyright &copy;<script>
-                  document.write(new Date().getFullYear());
+                    document.write(new Date().getFullYear());
                   </script> All rights reserved. </a>
                   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </p>
@@ -611,65 +610,65 @@ button:hover {
   <script src="./assets/js/main.js"></script>
 
   <script>
-  function openModal() {
-    var modal = document.getElementById("myModal");
-    modal.style.display = "block";
-  }
+    function openModal() {
+      var modal = document.getElementById("myModal");
+      modal.style.display = "block";
+    }
 
-  function closeModal() {
-    var modal = document.getElementById("myModal");
-    modal.style.display = "none";
-  }
-
-  // Close the modal when clicking outside of it
-  window.onclick = function(event) {
-    var modal = document.getElementById("myModal");
-    if (event.target == modal) {
+    function closeModal() {
+      var modal = document.getElementById("myModal");
       modal.style.display = "none";
     }
-  }
 
-  $(document).ready(function() {
-    function loadJobListings() {
+    // Close the modal when clicking outside of it
+    window.onclick = function(event) {
+      var modal = document.getElementById("myModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    $(document).ready(function() {
+      function loadJobListings() {
         var selectedSortOption = $('#sortSelect').val(); // Get the selected sort option
         var selectedSortOption2 = $('#sortSelect2').val();
         var selectedDateFilter = $('input[type="radio"][name="dateFilter"]:checked').val();
         var searchValue = $('#searchInput').val();
 
         $.ajax({
-            type: "GET",
-            url: "controller/sort_job_controller.php",
-            data: {
-                select: selectedSortOption,
-                select2: selectedSortOption2,
-                select3: selectedDateFilter,
-                select4: searchValue
-            },
-            success: function(response) {
-                $('#jobListings').html(response);
-            }
+          type: "GET",
+          url: "controller/sort_job_controller.php",
+          data: {
+            select: selectedSortOption,
+            select2: selectedSortOption2,
+            select3: selectedDateFilter,
+            select4: searchValue
+          },
+          success: function(response) {
+            $('#jobListings').html(response);
+          }
         });
-    }
+      }
 
-    function getQueryParam(param) {
+      function getQueryParam(param) {
         var urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
-    }
+      }
 
-    var initialSearchQuery = getQueryParam('searchQuery');
-    if (initialSearchQuery) {
+      var initialSearchQuery = getQueryParam('searchQuery');
+      if (initialSearchQuery) {
         $('#searchInput').val(initialSearchQuery); // Set the search input to the initial query
-    }
-    
-    // Load job listings on page load
-    loadJobListings();
+      }
 
-    // Reload job listings when the selection changes
-    $('#sortSelect').change(loadJobListings);
-    $('#sortSelect2').change(loadJobListings);
-    $('input[type="radio"][name="dateFilter"]').change(loadJobListings);
-    $('#searchInput').on('input', loadJobListings);
-});
+      // Load job listings on page load
+      loadJobListings();
+
+      // Reload job listings when the selection changes
+      $('#sortSelect').change(loadJobListings);
+      $('#sortSelect2').change(loadJobListings);
+      $('input[type="radio"][name="dateFilter"]').change(loadJobListings);
+      $('#searchInput').on('input', loadJobListings);
+    });
   </script>
 
 
