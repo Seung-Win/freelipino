@@ -23,7 +23,7 @@ require 'config.php';
 
 // Total rows or records to display
 
-$total_records_per_pagesss = 3;
+$total_records_per_pagesssssssss = 3;
 
 // Get the page offset for the LIMIT query
 $offset = ($page_no - 1) * $total_records_per_page;
